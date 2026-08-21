@@ -1,0 +1,9 @@
+{
+  "name": "Sukoon",
+  "tag": "Collection III",
+  "arabic": "سکون",
+  "description": "Minimal compositions inspired by stillness. The art of what is left unsaid.",
+  "bg_class": "col-sukoon",
+  "enabled": true,
+  "order": 3
+}

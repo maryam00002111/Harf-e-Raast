@@ -1,0 +1,9 @@
+{
+  "name": "Riwayat",
+  "tag": "Collection IV",
+  "arabic": "روایت",
+  "description": "Rooted in classical calligraphic heritage — tradition rendered for a contemporary gaze.",
+  "bg_class": "col-riwayat",
+  "enabled": true,
+  "order": 4
+}

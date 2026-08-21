@@ -1,0 +1,9 @@
+{
+  "name": "Noor",
+  "tag": "Collection I",
+  "arabic": "نور",
+  "description": "Contemporary interpretations of light and sacred geometry. A dialogue between the visible and the eternal.",
+  "bg_class": "col-noor",
+  "enabled": true,
+  "order": 1
+}
