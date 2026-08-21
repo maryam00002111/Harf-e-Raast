@@ -46,6 +46,7 @@ collections:
     label_singular: "Product"
     folder: "_products"
     extension: json
+    format: json
     create: true
     delete: true
     slug: "{{slug}}"
@@ -114,6 +115,7 @@ collections:
     label_singular: "Collection"
     folder: "_collections"
     extension: json
+    format: json
     create: true
     delete: true
     slug: "{{slug}}"
@@ -139,6 +141,7 @@ collections:
     label_singular: "Article"
     folder: "_journal"
     extension: json
+    format: json
     create: true
     delete: true
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
@@ -166,6 +169,7 @@ collections:
     label_singular: "Page"
     folder: "_pages"
     extension: json
+    format: json
     create: true
     delete: true
     slug: "{{slug}}"
