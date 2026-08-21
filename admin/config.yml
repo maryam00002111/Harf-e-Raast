@@ -1,0 +1,341 @@
+# =============================================================
+# HARF-E-RAAST — DECAP CMS CONFIGURATION
+# https://decapcms.org/docs/configuration-options/
+#
+# Deploy this project to Netlify and connect your Git repository.
+# Netlify Identity (or another auth provider) handles login.
+# Every field is optional — no required: true anywhere.
+# No stock / inventory management anywhere.
+# =============================================================
+
+# ── Backend ──────────────────────────────────────────────────
+# For Netlify deployment with Netlify Identity:
+backend:
+  name: git-gateway
+  branch: main          # Change to your default branch if different
+
+# For local development without Netlify (run: npx decap-server):
+# backend:
+#   name: proxy
+#   proxy_url: http://localhost:8081/api/v1
+
+# ── Media / Uploads ──────────────────────────────────────────
+media_folder: "uploads"          # Where uploaded images are stored in the repo
+public_folder: "/uploads"        # The public URL path served to the browser
+
+# ── Editorial Workflow (optional draft/review states) ────────
+publish_mode: editorial_workflow
+
+# ── Site URL ─────────────────────────────────────────────────
+# Replace with your actual Netlify site URL:
+# site_url: https://your-site.netlify.app
+
+# ── Display name in the CMS header ───────────────────────────
+locale: en
+
+# =============================================================
+# COLLECTIONS
+# =============================================================
+collections:
+
+  # ────────────────────────────────────────────────────────────
+  # 1. PRODUCTS
+  # ────────────────────────────────────────────────────────────
+  - name: "products"
+    label: "Products"
+    label_singular: "Product"
+    folder: "_products"
+    create: true
+    delete: true
+    slug: "{{slug}}"
+    identifier_field: name
+    summary: "{{name}} — {{price}}"
+    sortable_fields: ["name", "collection", "price"]
+    fields:
+
+      # Core identity
+      - { label: "Product Name",         name: name,          widget: string,   required: false, hint: "Leave empty if not yet named." }
+      - { label: "Short Description",    name: short_desc,    widget: string,   required: false, hint: "One-line tagline shown on product card." }
+      - { label: "Full Description",     name: description,   widget: text,     required: false }
+      - { label: "Product Story",        name: story,         widget: text,     required: false, hint: "The narrative displayed on the product detail page." }
+
+      # Pricing — all optional, no stock
+      - { label: "Price",                name: price,         widget: string,   required: false, hint: "e.g. PKR 45,000 / £ 120" }
+      - { label: "Original Price",       name: original_price, widget: string,  required: false, hint: "Crossed-out price when on sale." }
+      - { label: "Sale Enabled",         name: sale_enabled,  widget: boolean,  required: false, default: false }
+      - { label: "Sale Label",           name: sale_label,    widget: string,   required: false, hint: "e.g. 20% OFF — only shown when Sale Enabled is on." }
+
+      # Organisation
+      - { label: "Collection",           name: collection,    widget: relation, required: false,
+          collection: collections_list, value_field: name, search_fields: [name],
+          hint: "Which collection this artwork belongs to." }
+      - { label: "SKU / Reference Code", name: sku,           widget: string,   required: false }
+      - { label: "Tags",                 name: tags,          widget: list,     required: false, hint: "Comma-separated tags." }
+      - { label: "Product Badge",        name: badge,         widget: string,   required: false, hint: "e.g. Limited, New, Exclusive" }
+
+      # Display flags
+      - { label: "Featured",             name: featured,      widget: boolean,  required: false, default: false, hint: "Show in featured grid." }
+      - { label: "Active (visible)",     name: enabled,       widget: boolean,  required: false, default: true,  hint: "Uncheck to hide from website without deleting." }
+
+      # Media
+      - { label: "Primary Image",        name: image,         widget: image,    required: false, hint: "Main product artwork image." }
+      - label: "Additional Images"
+        name: images
+        widget: list
+        required: false
+        field: { label: Image, name: image, widget: image, required: false }
+
+      # Product detail metadata
+      - { label: "Arabic Letter / Script", name: arabic,      widget: string,   required: false, hint: "Arabic character shown as artwork placeholder (e.g. نور)." }
+      - { label: "Materials",            name: materials,     widget: string,   required: false, hint: "e.g. Ink on Paper" }
+      - { label: "Dimensions",           name: dimensions,    widget: string,   required: false, hint: "e.g. 60 × 80 cm" }
+      - { label: "Edition",              name: edition,       widget: string,   required: false, hint: "e.g. Original, Limited Edition" }
+
+      # CTA
+      - { label: "CTA Button Text",      name: cta_text,      widget: string,   required: false, hint: "e.g. View Artwork — hidden if empty." }
+      - { label: "CTA Button Link",      name: cta_link,      widget: string,   required: false }
+
+      # SEO
+      - { label: "SEO Title",            name: seo_title,     widget: string,   required: false }
+      - { label: "SEO Description",      name: seo_description, widget: text,   required: false }
+      - { label: "OG / Social Image",    name: og_image,      widget: image,    required: false }
+
+      # Internal sort order
+      - { label: "Display Order",        name: order,         widget: number,   required: false, default: 0,
+          hint: "Lower numbers appear first. All optional." }
+
+
+  # ────────────────────────────────────────────────────────────
+  # 2. COLLECTIONS  (renamed to avoid YAML keyword collision)
+  # ────────────────────────────────────────────────────────────
+  - name: "collections_list"
+    label: "Collections"
+    label_singular: "Collection"
+    folder: "_collections"
+    create: true
+    delete: true
+    slug: "{{slug}}"
+    identifier_field: name
+    summary: "{{name}}"
+    fields:
+      - { label: "Collection Name",      name: name,          widget: string,   required: false }
+      - { label: "Tag Line",             name: tag,           widget: string,   required: false, hint: "e.g. Collection I" }
+      - { label: "Arabic Script",        name: arabic,        widget: string,   required: false, hint: "e.g. نور" }
+      - { label: "Description",          name: description,   widget: text,     required: false }
+      - { label: "Collection Image",     name: image,         widget: image,    required: false }
+      - { label: "Background CSS Class", name: bg_class,      widget: string,   required: false,
+          hint: "CSS class for gradient background (col-noor / col-huroof / col-sukoon / col-riwayat). Leave empty or add your own." }
+      - { label: "Active",               name: enabled,       widget: boolean,  required: false, default: true }
+      - { label: "Display Order",        name: order,         widget: number,   required: false, default: 0 }
+
+
+  # ────────────────────────────────────────────────────────────
+  # 3. JOURNAL / BLOG
+  # ────────────────────────────────────────────────────────────
+  - name: "journal"
+    label: "Journal"
+    label_singular: "Article"
+    folder: "_journal"
+    create: true
+    delete: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    identifier_field: title
+    summary: "{{title}} — {{date}}"
+    fields:
+      - { label: "Title",                name: title,         widget: string,   required: false }
+      - { label: "Category",             name: category,      widget: string,   required: false, hint: "e.g. Essay, Craft, Reflection" }
+      - { label: "Author",               name: author,        widget: string,   required: false }
+      - { label: "Publish Date",         name: date,          widget: datetime, required: false, format: "YYYY-MM-DD" }
+      - { label: "Published",            name: published,     widget: boolean,  required: false, default: false, hint: "Unpublished articles are hidden from the website." }
+      - { label: "Excerpt",              name: excerpt,       widget: text,     required: false, hint: "Short summary shown on the journal listing." }
+      - { label: "Full Content",         name: body,          widget: markdown, required: false }
+      - { label: "Cover Image",          name: image,         widget: image,    required: false }
+      - { label: "Arabic Letter",        name: arabic,        widget: string,   required: false, hint: "Decorative letter shown when no cover image." }
+      - { label: "SEO Title",            name: seo_title,     widget: string,   required: false }
+      - { label: "SEO Description",      name: seo_description, widget: text,   required: false }
+
+
+  # ────────────────────────────────────────────────────────────
+  # 4. PAGES
+  # ────────────────────────────────────────────────────────────
+  - name: "pages"
+    label: "Pages"
+    label_singular: "Page"
+    folder: "_pages"
+    create: true
+    delete: true
+    slug: "{{slug}}"
+    identifier_field: title
+    fields:
+      - { label: "Page Title",           name: title,         widget: string,   required: false }
+      - { label: "URL Slug",             name: slug,          widget: string,   required: false, hint: "e.g. about, contact, shipping" }
+      - { label: "Published",            name: published,     widget: boolean,  required: false, default: false }
+      - { label: "Content",              name: body,          widget: markdown, required: false }
+      - { label: "Page Image",           name: image,         widget: image,    required: false }
+      - { label: "SEO Title",            name: seo_title,     widget: string,   required: false }
+      - { label: "SEO Description",      name: seo_description, widget: text,   required: false }
+
+
+  # ────────────────────────────────────────────────────────────
+  # 5. SITE-WIDE SETTINGS  (single-file collections)
+  # ────────────────────────────────────────────────────────────
+
+  # ── 5a. Hero ──
+  - name: "hero"
+    label: "Hero"
+    files:
+      - name: "hero"
+        label: "Hero Section"
+        file: "_data/hero.json"
+        fields:
+          - { label: "Hero Enabled",     name: enabled,           widget: boolean, required: false, default: true }
+          - { label: "Eyebrow Text",     name: eyebrow,           widget: string,  required: false, hint: "Small text above headline. e.g. The Art of the Written Form" }
+          - { label: "Headline Line 1",  name: headline_line_1,   widget: string,  required: false }
+          - { label: "Headline Line 2",  name: headline_line_2,   widget: string,  required: false }
+          - { label: "Headline Line 3 (italic)", name: headline_line_3, widget: string, required: false }
+          - { label: "Subheading",       name: subheading,        widget: text,    required: false }
+          - { label: "Primary CTA Text", name: cta_primary_text,  widget: string,  required: false }
+          - { label: "Primary CTA Link", name: cta_primary_link,  widget: string,  required: false }
+          - { label: "Secondary CTA Text", name: cta_secondary_text, widget: string, required: false }
+          - { label: "Secondary CTA Link", name: cta_secondary_link, widget: string, required: false }
+          - { label: "Focal Arabic Letter", name: focal_arabic,   widget: string,  required: false, hint: "Large centred Arabic letter in the artwork pane. e.g. نور" }
+          - { label: "Focal Label",      name: focal_label,       widget: string,  required: false, hint: "e.g. Noor — Light" }
+          - { label: "Edition Tag",      name: edition_tag,       widget: string,  required: false, hint: "Bottom-right small text. e.g. Harf-e-Raast — 2024" }
+          - { label: "Hero Background Image (desktop)", name: image_desktop, widget: image, required: false,
+              hint: "Leave empty to use the default premium CSS background — no image required." }
+          - { label: "Hero Background Image (mobile)",  name: image_mobile,  widget: image, required: false }
+
+
+  # ── 5b. Announcement Bar ──
+  - name: "announcement"
+    label: "Announcement Bar"
+    files:
+      - name: "announcement"
+        label: "Announcement Bar"
+        file: "_data/announcement.json"
+        fields:
+          - { label: "Bar Enabled",      name: enabled,    widget: boolean, required: false, default: false }
+          - label: "Announcements"
+            name: items
+            widget: list
+            required: false
+            fields:
+              - { label: "Text",         name: text,       widget: string,  required: false }
+              - { label: "Link",         name: link,       widget: string,  required: false }
+              - { label: "Link Text",    name: link_text,  widget: string,  required: false, hint: "Text for the link. If empty, the whole announcement text becomes the link." }
+              - { label: "Enabled",      name: enabled,    widget: boolean, required: false, default: true }
+              - { label: "Order",        name: order,      widget: number,  required: false, default: 0 }
+
+
+  # ── 5c. Shipping & Delivery ──
+  - name: "shipping"
+    label: "Shipping & Delivery"
+    files:
+      - name: "shipping"
+        label: "Shipping Settings"
+        file: "_data/shipping.json"
+        fields:
+          - { label: "Delivery Charge (PKR)", name: delivery_charge,     widget: number,  required: false, default: 300 }
+          - { label: "Free Delivery Enabled", name: free_delivery_enabled, widget: boolean, required: false, default: true }
+          - { label: "Free Delivery Threshold (PKR)", name: free_delivery_threshold, widget: number, required: false, default: 10000 }
+          - { label: "Delivery Message",      name: delivery_message,    widget: string,  required: false,
+              hint: "Shown to customers. e.g. Free delivery on orders over PKR 10,000" }
+          - { label: "Shipping Notes",        name: shipping_notes,      widget: text,    required: false }
+
+
+  # ── 5d. Payment ──
+  - name: "payment"
+    label: "Payment"
+    files:
+      - name: "payment"
+        label: "Payment Settings"
+        file: "_data/payment.json"
+        fields:
+          - { label: "Cash on Delivery Enabled", name: cod_enabled,       widget: boolean, required: false, default: true }
+          - { label: "Payment Method Name",       name: cod_name,          widget: string,  required: false, hint: "e.g. Cash on Delivery" }
+          - { label: "Payment Instructions",      name: cod_instructions,  widget: text,    required: false }
+
+
+  # ── 5e. Feature Controls ──
+  - name: "features"
+    label: "Feature Controls"
+    files:
+      - name: "features"
+        label: "Feature On/Off Switches"
+        file: "_data/features.json"
+        fields:
+          - { label: "Announcement Bar",     name: announcement_bar,      widget: boolean, required: false, default: false }
+          - { label: "Sales & Discounts",    name: sales,                 widget: boolean, required: false, default: true }
+          - { label: "Journal Section",      name: journal,               widget: boolean, required: false, default: true }
+          - { label: "Newsletter",           name: newsletter,            widget: boolean, required: false, default: true }
+          - { label: "Featured Artwork Section", name: featured_artwork,  widget: boolean, required: false, default: true }
+          - { label: "Collections Section",  name: collections_section,   widget: boolean, required: false, default: true }
+          - { label: "Shop / Products Section", name: shop_section,       widget: boolean, required: false, default: true }
+          - { label: "Process Section",      name: process_section,       widget: boolean, required: false, default: true }
+          - { label: "Craft / Story Section", name: craft_section,        widget: boolean, required: false, default: true }
+          - { label: "Commission Section",   name: commission_section,    widget: boolean, required: false, default: true }
+          - { label: "Free Delivery",        name: free_delivery,         widget: boolean, required: false, default: true }
+          - { label: "Cash on Delivery",     name: cod,                   widget: boolean, required: false, default: true }
+
+
+  # ── 5f. Site Settings ──
+  - name: "settings"
+    label: "Site Settings"
+    files:
+      - name: "settings"
+        label: "Global Site Settings"
+        file: "_data/settings.json"
+        fields:
+          - { label: "Brand Name",           name: brand_name,       widget: string,  required: false }
+          - { label: "Brand Arabic Name",     name: brand_arabic,     widget: string,  required: false }
+          - { label: "Tagline",              name: tagline,           widget: text,    required: false }
+          - { label: "Contact Email",         name: email,            widget: string,  required: false }
+          - { label: "Phone / WhatsApp",      name: phone,            widget: string,  required: false }
+          - { label: "Address",              name: address,           widget: string,  required: false }
+          - { label: "Instagram URL",         name: instagram,        widget: string,  required: false }
+          - { label: "Pinterest URL",         name: pinterest,        widget: string,  required: false }
+          - { label: "LinkedIn URL",          name: linkedin,         widget: string,  required: false }
+          - { label: "WhatsApp Link",         name: whatsapp,         widget: string,  required: false }
+          - { label: "Footer Copyright Text", name: copyright,        widget: string,  required: false }
+          - { label: "Logo",                 name: logo,              widget: image,   required: false }
+          - { label: "Favicon",              name: favicon,           widget: image,   required: false }
+
+
+  # ── 5g. SEO ──
+  - name: "seo"
+    label: "SEO"
+    files:
+      - name: "seo"
+        label: "Global SEO Settings"
+        file: "_data/seo.json"
+        fields:
+          - { label: "Global Meta Title",       name: meta_title,        widget: string,  required: false }
+          - { label: "Global Meta Description", name: meta_description,  widget: text,    required: false }
+          - { label: "OG / Social Image",       name: og_image,          widget: image,   required: false }
+
+
+  # ── 5h. Featured Artwork (homepage section) ──
+  - name: "featured_artwork"
+    label: "Featured Artwork"
+    files:
+      - name: "featured_artwork"
+        label: "Featured Artwork Section"
+        file: "_data/featured_artwork.json"
+        fields:
+          - { label: "Section Enabled",    name: enabled,      widget: boolean, required: false, default: true }
+          - { label: "Eyebrow",            name: eyebrow,      widget: string,  required: false }
+          - { label: "Title",              name: title,        widget: string,  required: false }
+          - { label: "Arabic Letter",      name: arabic,       widget: string,  required: false }
+          - { label: "Reference Number",   name: ref_num,      widget: string,  required: false, hint: "e.g. 001 / Noor Collection" }
+          - { label: "Body Text",          name: body,         widget: text,    required: false }
+          - label: "Meta Fields"
+            name: meta
+            widget: list
+            required: false
+            fields:
+              - { label: "Label", name: label, widget: string, required: false }
+              - { label: "Value", name: value, widget: string, required: false }
+          - { label: "CTA Text",           name: cta_text,     widget: string,  required: false }
+          - { label: "CTA Link",           name: cta_link,     widget: string,  required: false }
+          - { label: "Artwork Image",      name: image,        widget: image,   required: false,
+              hint: "Leave empty to use the default CSS artwork." }
