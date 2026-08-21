@@ -1,0 +1,33 @@
+{
+  "name": "Riwayat I",
+  "short_desc": "Classical heritage rendered for a contemporary gaze.",
+  "description": "A contemporary interpretation rooted in classical calligraphic heritage.",
+  "story": "Tradition rendered with a modern editorial sensibility.",
+  "price": "PKR 60,000 / £ 155",
+  "original_price": "",
+  "sale_enabled": false,
+  "sale_label": "",
+  "collection": "Riwayat",
+  "sku": "RIWAYAT-I",
+  "tags": [
+    "Riwayat",
+    "Original",
+    "Calligraphy"
+  ],
+  "badge": "",
+  "featured": false,
+  "enabled": true,
+  "image": "",
+  "images": [],
+  "arabic": "روایت",
+  "materials": "Ink on Paper",
+  "dimensions": "60 × 80 cm",
+  "edition": "Original",
+  "cta_text": "View Artwork",
+  "cta_link": "#",
+  "seo_title": "Riwayat I — Harf-e-Raast",
+  "seo_description": "Original contemporary Arabic calligraphy artwork from the Riwayat collection.",
+  "og_image": "",
+  "order": 4,
+  "bg_class": "p-col-4"
+}

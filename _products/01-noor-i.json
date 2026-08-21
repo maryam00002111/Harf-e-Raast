@@ -1,0 +1,33 @@
+{
+  "name": "Noor I",
+  "short_desc": "Original calligraphic artwork from the Noor collection.",
+  "description": "Contemporary calligraphy artwork inspired by light and sacred geometry.",
+  "story": "A study of light, rhythm and the written form.",
+  "price": "PKR 45,000 / £ 120",
+  "original_price": "",
+  "sale_enabled": false,
+  "sale_label": "",
+  "collection": "Noor",
+  "sku": "NOOR-I",
+  "tags": [
+    "Noor",
+    "Original",
+    "Calligraphy"
+  ],
+  "badge": "",
+  "featured": false,
+  "enabled": true,
+  "image": "",
+  "images": [],
+  "arabic": "نور",
+  "materials": "Ink on Paper",
+  "dimensions": "60 × 80 cm",
+  "edition": "Original",
+  "cta_text": "View Artwork",
+  "cta_link": "#",
+  "seo_title": "Noor I — Harf-e-Raast",
+  "seo_description": "Original contemporary Arabic calligraphy artwork from the Noor collection.",
+  "og_image": "",
+  "order": 1,
+  "bg_class": "p-col-1"
+}

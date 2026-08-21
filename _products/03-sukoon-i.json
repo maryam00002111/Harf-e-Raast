@@ -1,0 +1,33 @@
+{
+  "name": "Sukoon I",
+  "short_desc": "A minimal composition inspired by stillness.",
+  "description": "Minimal calligraphic composition exploring silence, space and the art of what is left unsaid.",
+  "story": "A deliberate study in stillness and restraint.",
+  "price": "PKR 52,000 / £ 135",
+  "original_price": "",
+  "sale_enabled": false,
+  "sale_label": "",
+  "collection": "Sukoon",
+  "sku": "SUKOON-I",
+  "tags": [
+    "Sukoon",
+    "Original",
+    "Calligraphy"
+  ],
+  "badge": "",
+  "featured": false,
+  "enabled": true,
+  "image": "",
+  "images": [],
+  "arabic": "سکون",
+  "materials": "Ink on Paper",
+  "dimensions": "60 × 80 cm",
+  "edition": "Original",
+  "cta_text": "View Artwork",
+  "cta_link": "#",
+  "seo_title": "Sukoon I — Harf-e-Raast",
+  "seo_description": "Original contemporary Arabic calligraphy artwork from the Sukoon collection.",
+  "og_image": "",
+  "order": 3,
+  "bg_class": "p-col-3"
+}

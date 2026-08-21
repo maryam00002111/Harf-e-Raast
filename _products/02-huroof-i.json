@@ -1,0 +1,33 @@
+{
+  "name": "Huroof I",
+  "short_desc": "An exploration of letters as pure visual form.",
+  "description": "A contemporary study where language transcends meaning and becomes structure.",
+  "story": "The letter is treated as architecture, rhythm and visual form.",
+  "price": "PKR 38,000 / £ 98",
+  "original_price": "",
+  "sale_enabled": false,
+  "sale_label": "",
+  "collection": "Huroof",
+  "sku": "HUROOF-I",
+  "tags": [
+    "Huroof",
+    "Original",
+    "Calligraphy"
+  ],
+  "badge": "",
+  "featured": false,
+  "enabled": true,
+  "image": "",
+  "images": [],
+  "arabic": "حرف",
+  "materials": "Ink on Paper",
+  "dimensions": "60 × 80 cm",
+  "edition": "Original",
+  "cta_text": "View Artwork",
+  "cta_link": "#",
+  "seo_title": "Huroof I — Harf-e-Raast",
+  "seo_description": "Original contemporary Arabic calligraphy artwork from the Huroof collection.",
+  "og_image": "",
+  "order": 2,
+  "bg_class": "p-col-2"
+}
