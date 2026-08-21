@@ -1,0 +1,29 @@
+{
+  "enabled": true,
+  "eyebrow": "Featured Work",
+  "title": "Alif — <em>The First<br>Letter.</em>",
+  "arabic": "الف",
+  "ref_num": "001 / Noor Collection",
+  "body": "The first letter of the Arabic alphabet. A single vertical stroke that holds within it the beginning of all language, all form, all meaning. This original piece explores the Alif in isolation — stripped of context, it becomes pure presence.",
+  "meta": [
+    {
+      "label": "Collection",
+      "value": "Noor"
+    },
+    {
+      "label": "Medium",
+      "value": "Ink on Paper"
+    },
+    {
+      "label": "Dimensions",
+      "value": "60 × 80 cm"
+    },
+    {
+      "label": "Edition",
+      "value": "Original"
+    }
+  ],
+  "cta_text": "View Artwork",
+  "cta_link": "#",
+  "image": ""
+}

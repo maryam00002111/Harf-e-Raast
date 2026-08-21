@@ -1,0 +1,14 @@
+{
+  "announcement_bar": false,
+  "sales": true,
+  "journal": true,
+  "newsletter": true,
+  "featured_artwork": true,
+  "collections_section": true,
+  "shop_section": true,
+  "process_section": true,
+  "craft_section": true,
+  "commission_section": true,
+  "free_delivery": true,
+  "cod": true
+}
