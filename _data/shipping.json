@@ -1,7 +1,7 @@
 {
-  "delivery_charge": 0,
+  "delivery_charge": 300,
   "free_delivery_enabled": true,
-  "free_delivery_threshold": 0,
-  "delivery_message": "",
+  "free_delivery_threshold": 10000,
+  "delivery_message": "Complete your collection — complimentary delivery awaits at PKR 10,000.",
   "shipping_notes": ""
 }
