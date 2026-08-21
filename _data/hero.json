@@ -1,17 +1,17 @@
 {
   "enabled": true,
+  "subheading": "Contemporary calligraphy rooted in heritage, crafted for the modern world.",
+  "image_mobile": "/uploads/chatgpt-image-aug-21-2026-03_55_59-pm.png",
+  "cta_primary_link": "#shop",
+  "focal_arabic": "نور",
+  "cta_secondary_text": "Discover Our Story",
   "eyebrow": "The Art of the Written Form",
   "headline_line_1": "Where",
   "headline_line_2": "Letters",
   "headline_line_3": "Become Art.",
-  "subheading": "Contemporary calligraphy rooted in heritage, crafted for the modern world.",
-  "cta_primary_text": "Explore the Collection",
-  "cta_primary_link": "#shop",
-  "cta_secondary_text": "Discover Our Story",
   "cta_secondary_link": "#commission",
-  "focal_arabic": "نور",
-  "focal_label": "Noor — Light",
+  "image_desktop": "/uploads/chatgpt-image-aug-21-2026-03_57_27-pm-1-.png",
   "edition_tag": "Harf-e-Raast — 2024",
-  "image_desktop": "",
-  "image_mobile": ""
+  "cta_primary_text": "",
+  "focal_label": "Noor — Light"
 }
