@@ -1,0 +1,24 @@
+{
+  "products": [
+    "noor-i.json",
+    "huroof-i.json",
+    "sukoon-i.json",
+    "riwayat-i.json"
+  ],
+  "collections": [
+    "huroof.json",
+    "noor.json",
+    "riwayat.json",
+    "sukoon.json"
+  ],
+  "journal": [
+    "2024-01-15-language-of-letters.json",
+    "2024-02-01-geometry-behind-beauty.json",
+    "2024-03-10-study-in-stillness.json"
+  ],
+  "pages": [
+    "about.json",
+    "commission.json"
+  ],
+  "generated": "2024-01-01T00:00:00.000Z"
+}

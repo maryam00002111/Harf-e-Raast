@@ -1,0 +1,53 @@
+# HARF-E-RAAST — Netlify Configuration
+# https://docs.netlify.com/configure-builds/file-based-configuration/
+
+[build]
+  # Run manifest generator before publishing.
+  # If you add a static site generator (e.g. Eleventy, Hugo) later,
+  # put its build command here instead and call generate-manifest.js
+  # as a pre-step.
+  command   = "node generate-manifest.js"
+  publish   = "."           # Serve from repo root (static site)
+
+# ── Netlify Identity — required for Decap CMS Git Gateway ──────
+# Enable Netlify Identity in your Netlify site dashboard:
+#   Site Settings → Identity → Enable Identity
+#   Then: Identity → Services → Git Gateway → Enable Git Gateway
+#   Then: Identity → Registration → Invite Only (recommended)
+
+# ── Headers ────────────────────────────────────────────────────
+[[headers]]
+  for = "/admin/*"
+  [headers.values]
+    X-Robots-Tag = "noindex"
+    Cache-Control = "no-cache"
+
+[[headers]]
+  for = "/_data/*"
+  [headers.values]
+    Cache-Control = "no-cache, no-store, must-revalidate"
+    Access-Control-Allow-Origin = "*"
+
+[[headers]]
+  for = "/_products/*"
+  [headers.values]
+    Cache-Control = "no-cache, no-store, must-revalidate"
+    Access-Control-Allow-Origin = "*"
+
+[[headers]]
+  for = "/_collections/*"
+  [headers.values]
+    Cache-Control = "no-cache, no-store, must-revalidate"
+    Access-Control-Allow-Origin = "*"
+
+[[headers]]
+  for = "/_journal/*"
+  [headers.values]
+    Cache-Control = "no-cache, no-store, must-revalidate"
+    Access-Control-Allow-Origin = "*"
+
+[[headers]]
+  for = "/her-manifest.json"
+  [headers.values]
+    Cache-Control = "no-cache, no-store, must-revalidate"
+    Access-Control-Allow-Origin = "*"
