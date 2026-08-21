@@ -1,24 +1,20 @@
 {
   "products": [
-    "noor-i.json",
-    "huroof-i.json",
-    "sukoon-i.json",
-    "riwayat-i.json"
+    "01-noor-i.json",
+    "02-huroof-i.json",
+    "03-sukoon-i.json",
+    "04-riwayat-i.json"
   ],
   "collections": [
-    "huroof.json",
-    "noor.json",
-    "riwayat.json",
-    "sukoon.json"
+    "01-noor.json",
+    "02-huroof.json",
+    "03-sukoon.json",
+    "04-riwayat.json"
   ],
   "journal": [
-    "2024-01-15-language-of-letters.json",
-    "2024-02-01-geometry-behind-beauty.json",
-    "2024-03-10-study-in-stillness.json"
+    "01-the-language-of-letters-why-calligraphy-is-the-most-human-art.json",
+    "02-the-geometry-behind-beauty.json",
+    "03-a-study-in-stillness.json"
   ],
-  "pages": [
-    "about.json",
-    "commission.json"
-  ],
-  "generated": "2024-01-01T00:00:00.000Z"
+  "pages": []
 }
