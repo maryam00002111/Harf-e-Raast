@@ -1,4 +1,10 @@
 {
-  "enabled": false,
-  "items": []
+  "enabled": true,
+  "items": [
+    {
+      "enabled": true,
+      "order": 0,
+      "text": "A Gesture of Elegance — Complimentary Delivery on Orders Above PKR 10,000."
+    }
+  ]
 }
