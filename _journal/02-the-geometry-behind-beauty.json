@@ -1,13 +1,13 @@
 {
-  "title": "The Geometry Behind Beauty",
-  "category": "Craft",
-  "author": "Harf-e-Raast",
-  "date": "2024-02-01",
-  "published": true,
   "excerpt": "Classical Arabic calligraphy is governed by a precise geometric system of proportions — the hidden architecture that makes a letter feel inevitable.",
   "body": "Classical Arabic calligraphy is governed by a precise geometric system of proportions — the hidden architecture that makes a letter feel inevitable.",
-  "image": "",
+  "author": "Harf-e-Raast",
   "arabic": "ب",
+  "published": true,
+  "date": "2024-02-01",
   "seo_title": "The Geometry Behind Beauty — Harf-e-Raast",
-  "seo_description": "Exploring the geometry and proportion behind classical Arabic calligraphy."
+  "title": "The Geometry Behind Beauty",
+  "seo_description": "Exploring the geometry and proportion behind classical Arabic calligraphy.",
+  "image": "/uploads/pexels-alispective-35048693.jpg",
+  "category": "Craft"
 }
