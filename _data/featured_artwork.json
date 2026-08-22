@@ -1,9 +1,5 @@
 {
   "enabled": true,
-  "eyebrow": "Featured Work",
-  "title": "Alif — <em>The First<br>Letter.</em>",
-  "arabic": "الف",
-  "ref_num": "001 / Noor Collection",
   "body": "The first letter of the Arabic alphabet. A single vertical stroke that holds within it the beginning of all language, all form, all meaning. This original piece explores the Alif in isolation — stripped of context, it becomes pure presence.",
   "meta": [
     {
@@ -23,7 +19,11 @@
       "value": "Original"
     }
   ],
-  "cta_text": "View Artwork",
   "cta_link": "#",
-  "image": ""
+  "eyebrow": "Featured Work",
+  "arabic": "الف",
+  "title": "Alif — <em>The First<br>Letter.</em>",
+  "ref_num": "",
+  "image": "/uploads/whatsapp-image-2026-08-20-at-5.10.00-pm.jpeg",
+  "cta_text": "View Artwork"
 }
