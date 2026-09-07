@@ -312,11 +312,11 @@ main{padding-top:72px;min-height:100vh}
 
   // Add to bag — simple session store (integrates with any future cart)
   window.addToBag = function() {
-    const cart = JSON.parse(sessionStorage.getItem('her_cart') || '[]');
-    const existing = cart.find(i => i.slug === product._slug);
-    if (existing) { existing.qty = (existing.qty||1) + 1; }
-    else { cart.push({ slug:product._slug, name:product.name, price:product.price, image:product.image, qty:1 }); }
-    sessionStorage.setItem('her_cart', JSON.stringify(cart));
+  const cart = JSON.parse(localStorage.getItem('her_cart') || '[]');
+  const existing = cart.find(i => i.slug === product._slug);
+  if (existing) { existing.qty = (existing.qty||1) + 1; }
+  else { cart.push({ slug:product._slug, name:product.name, price:product.price, image:product.image, qty:1 }); }
+  localStorage.setItem('her_cart', JSON.stringify(cart));
     // Visual feedback
     const btn = document.querySelector('.btn-primary span');
     if (btn) {
