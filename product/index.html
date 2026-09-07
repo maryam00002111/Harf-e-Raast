@@ -289,6 +289,7 @@ main{padding-top:72px;min-height:100vh}
         metaHTML +
         '<div class="product-ctas">' +
           '<button class="btn-primary" onclick="addToBag()"><span>Add to Bag</span><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>' +
+          '<button class="btn-primary" onclick="buyNow()"><span>Buy Now</span><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>' +
           (waNum ? '<a href="' + waUrl + '" target="_blank" rel="noopener" class="btn-whatsapp">Discuss on WhatsApp <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" width="14" height="14"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>' : '') +
           '<a href="/customize-artwork/" class="btn-customize">Customize This Artwork <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" width="14" height="14"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>' +
         '</div>' +
@@ -323,6 +324,12 @@ main{padding-top:72px;min-height:100vh}
       const orig = btn.textContent;
       btn.textContent = 'Added to Bag ✓';
       setTimeout(() => { btn.textContent = orig; }, 2000);
+  window.buyNow = function() {
+  addToBag();              // reuse the same "add to locker" logic
+  window.location.href = '/#'; // send them to the homepage
+  // once you build a real checkout page, change the line above to:
+  // window.location.href = '/checkout/';
+};
     }
   };
 })();
