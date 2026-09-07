@@ -44,47 +44,11 @@ body {
   font-weight: 300;
   line-height: 1.6;
   overflow-x: hidden;
-  cursor: none;
 }
 a { color: inherit; text-decoration: none; }
 img { display: block; width: 100%; }
-button { cursor: none; border: none; background: none; font-family: inherit; }
+button { cursor: pointer; border: none; background: none; font-family: inherit; }
 
-/* ─── CURSOR ──────────────────────────────────────────────────── */
-#cursor {
-  position: fixed;
-  top: 0; left: 0;
-  width: 10px; height: 10px;
-  border-radius: 50%;
-  background: var(--obsidian);
-  pointer-events: none;
-  z-index: 9999;
-  transform: translate(-50%, -50%);
-  transition: width .3s var(--ease-out-expo), height .3s var(--ease-out-expo),
-              background .3s, opacity .3s;
-  mix-blend-mode: multiply;
-}
-#cursor.hover {
-  width: 56px; height: 56px;
-  background: var(--obsidian);
-  mix-blend-mode: normal;
-}
-#cursor.hover::after {
-  content: 'VIEW';
-  position: absolute;
-  top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
-  font-family: var(--sans);
-  font-size: 9px;
-  letter-spacing: .12em;
-  color: var(--warm-ivory);
-  font-weight: 500;
-}
-#cursor.link {
-  width: 28px; height: 28px;
-  background: transparent;
-  border: 1px solid var(--obsidian);
-}
 
 /* ─── INTRO ───────────────────────────────────────────────────── */
 #intro {
@@ -1788,15 +1752,34 @@ body,
   font-weight: 300;
   letter-spacing: .38em;
 }
+
+.btn-customize-hero {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 0;
+  font-family: var(--sans);
+  font-size: .62rem;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: rgba(181,154,104,.7);
+  font-weight: 400;
+  border-bottom: 1px solid rgba(181,154,104,.25);
+  width: fit-content;
+  transition: color .3s, border-color .3s, gap .3s;
+  text-decoration: none;
+}
+.btn-customize-hero:hover {
+  color: var(--champagne);
+  border-color: var(--champagne);
+  gap: 14px;
+}
 </style>
 </head>
 <body>
 
 <!-- Announcement Bar — rendered by cms-render.js from _data/announcement.json -->
 <div id="her-announcement-bar" style="display:none;background:var(--obsidian);color:var(--champagne);text-align:center;padding:10px 24px;font-family:var(--sans);font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;position:relative;z-index:1100;"></div>
-
-<!-- Custom Cursor -->
-<div id="cursor"></div>
 
 <!-- Intro Screen -->
 <div id="intro">
@@ -1807,7 +1790,7 @@ body,
 
 <!-- Navigation -->
 <nav id="navbar">
-  <a href="#" class="nav-logo">Harf-e-Raast <span>حرف</span></a>
+  <a href="/" class="nav-logo">Harf-e-Raast <span>حرف</span></a>
   <ul class="nav-links">
     <li><a href="#collections">Collections</a></li>
     <li><a href="#shop">Shop</a></li>
@@ -1849,6 +1832,12 @@ body,
       </a>
       <a href="#commission" class="btn-ghost">
         Discover Our Story
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" width="14" height="14">
+          <path d="M3 8h10M9 4l4 4-4 4"/>
+        </svg>
+      </a>
+      <a href="/customize-artwork/" class="btn-customize-hero">
+        Customize Your Artwork
         <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" width="14" height="14">
           <path d="M3 8h10M9 4l4 4-4 4"/>
         </svg>
@@ -1935,7 +1924,7 @@ body,
       <div class="collections-subtitle sr">Signature Collections</div>
       <h2 class="collections-title sr sr-delay-1">Four worlds.<br><em>One language.</em></h2>
     </div>
-    <a href="#" class="see-all sr sr-delay-2">
+    <a href="#collections" class="see-all sr sr-delay-2">
       View All
       <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" width="14" height="14">
         <path d="M3 8h10M9 4l4 4-4 4"/>
@@ -2080,7 +2069,7 @@ body,
 <section class="shop" id="shop">
   <div class="shop-header">
     <h2 class="section-title sr">The <em>Collection.</em></h2>
-    <a href="#" class="see-all sr sr-delay-1">
+    <a href="#shop" class="see-all sr sr-delay-1">
       View All Works
       <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" width="14" height="14">
         <path d="M3 8h10M9 4l4 4-4 4"/>
@@ -2311,30 +2300,30 @@ body,
       <div class="footer-brand-arabic">حرفِ راست</div>
       <p class="footer-brand-text">A contemporary calligraphy maison dedicated to the art of the written form. Original works. Bespoke commissions. International shipping.</p>
       <div class="footer-social">
-        <a href="#">Instagram</a>
-        <a href="#">Pinterest</a>
-        <a href="#">LinkedIn</a>
+        <a href="#" id="footerInstagram" target="_blank" rel="noopener noreferrer">Instagram</a>
+        <a href="#" id="footerPinterest" target="_blank" rel="noopener noreferrer">Pinterest</a>
+        <a href="#" id="footerLinkedIn" target="_blank" rel="noopener noreferrer">LinkedIn</a>
       </div>
     </div>
     <div>
       <div class="footer-col-title">Explore</div>
       <ul class="footer-links">
-        <li><a href="#">Collections</a></li>
-        <li><a href="#">Shop All Works</a></li>
-        <li><a href="#">The Art</a></li>
-        <li><a href="#">Gallery</a></li>
-        <li><a href="#">Journal</a></li>
-        <li><a href="#">About</a></li>
+        <li><a href="/#collections">Collections</a></li>
+        <li><a href="/#shop">Shop All Works</a></li>
+        <li><a href="/#process">The Art</a></li>
+        <li><a href="/#shop">Gallery</a></li>
+        <li><a href="/#journal">Journal</a></li>
+        <li><a href="/#commission">About</a></li>
       </ul>
     </div>
     <div>
       <div class="footer-col-title">Services</div>
       <ul class="footer-links">
-        <li><a href="#">Custom Commission</a></li>
-        <li><a href="#">Corporate Gifting</a></li>
-        <li><a href="#">Art Consultation</a></li>
-        <li><a href="#">Installation Works</a></li>
-        <li><a href="#">Exhibitions</a></li>
+        <li><a href="/customize-artwork/">Custom Commission</a></li>
+        <li><a href="/customize-artwork/">Corporate Gifting</a></li>
+        <li><a href="/customize-artwork/">Art Consultation</a></li>
+        <li><a href="/#commission">Installation Works</a></li>
+        <li><a href="/#commission">Exhibitions</a></li>
       </ul>
     </div>
     <div>
@@ -2382,35 +2371,6 @@ body,
 </div>
 
 <script>
-/* ── CURSOR ─────────────────────────────────────────────────── */
-const cursor = document.getElementById('cursor');
-let mx = -100, my = -100, cx = -100, cy = -100;
-
-document.addEventListener('mousemove', e => {
-  mx = e.clientX; my = e.clientY;
-  // also feed hero parallax
-  heroMouseX = (e.clientX / window.innerWidth  - .5);
-  heroMouseY = (e.clientY / window.innerHeight - .5);
-}, { passive: true });
-
-function animateCursor() {
-  cx += (mx - cx) * 0.18;
-  cy += (my - cy) * 0.18;
-  cursor.style.left = cx + 'px';
-  cursor.style.top  = cy + 'px';
-  requestAnimationFrame(animateCursor);
-}
-animateCursor();
-
-document.querySelectorAll('.collection-card, .product-img, .featured-artwork, .craft-main, .hero-artwork').forEach(el => {
-  el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
-  el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
-});
-document.querySelectorAll('a, button').forEach(el => {
-  el.addEventListener('mouseenter', () => cursor.classList.add('link'));
-  el.addEventListener('mouseleave', () => cursor.classList.remove('link'));
-});
-
 /* ── INTRO ──────────────────────────────────────────────────── */
 const intro = document.getElementById('intro');
 const hero  = document.getElementById('hero');

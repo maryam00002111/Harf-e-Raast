@@ -1,6 +1,77 @@
 [build]
-  command = "node generate-manifest.js"
-  publish = "."
+  command   = "node generate-manifest.js"
+  publish   = "."
 
 [build.environment]
   NODE_VERSION = "20"
+
+# ── Clean URL redirects ──────────────────────────────────────────────────────
+# These serve the correct HTML template for each dynamic route.
+# The JS inside each template reads the slug from the URL and fetches the data.
+
+[[redirects]]
+  from   = "/product/:slug"
+  to     = "/product/index.html"
+  status = 200
+
+[[redirects]]
+  from   = "/product/:slug/"
+  to     = "/product/index.html"
+  status = 200
+
+[[redirects]]
+  from   = "/collection/:slug"
+  to     = "/collection/index.html"
+  status = 200
+
+[[redirects]]
+  from   = "/collection/:slug/"
+  to     = "/collection/index.html"
+  status = 200
+
+[[redirects]]
+  from   = "/journal/:slug"
+  to     = "/journal/index.html"
+  status = 200
+
+[[redirects]]
+  from   = "/journal/:slug/"
+  to     = "/journal/index.html"
+  status = 200
+
+# ── Headers ──────────────────────────────────────────────────────────────────
+[[headers]]
+  for = "/admin/*"
+  [headers.values]
+    X-Robots-Tag = "noindex"
+    Cache-Control = "no-cache"
+
+[[headers]]
+  for = "/_data/*"
+  [headers.values]
+    Cache-Control = "no-cache, no-store, must-revalidate"
+    Access-Control-Allow-Origin = "*"
+
+[[headers]]
+  for = "/_products/*"
+  [headers.values]
+    Cache-Control = "no-cache, no-store, must-revalidate"
+    Access-Control-Allow-Origin = "*"
+
+[[headers]]
+  for = "/_collections/*"
+  [headers.values]
+    Cache-Control = "no-cache, no-store, must-revalidate"
+    Access-Control-Allow-Origin = "*"
+
+[[headers]]
+  for = "/_journal/*"
+  [headers.values]
+    Cache-Control = "no-cache, no-store, must-revalidate"
+    Access-Control-Allow-Origin = "*"
+
+[[headers]]
+  for = "/her-manifest.json"
+  [headers.values]
+    Cache-Control = "no-cache, no-store, must-revalidate"
+    Access-Control-Allow-Origin = "*"

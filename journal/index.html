@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Journal — Harf-e-Raast</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,300;0,6..96,400;1,6..96,300&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500&family=Noto+Naskh+Arabic:wght@400&display=swap" rel="stylesheet">
+<style>
+:root{--obsidian:#11110F;--deep-ink:#171714;--warm-ivory:#F4F0E8;--soft-bone:#E8E1D5;--muted-sand:#CFC4B3;--champagne:#B59A68;--warm-gray:#777269;--serif:'Bodoni Moda',Georgia,serif;--sans:'DM Sans',system-ui,sans-serif;--arabic:'Noto Naskh Arabic',serif;--ease:cubic-bezier(0.19,1,0.22,1)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--sans);background:var(--warm-ivory);color:var(--obsidian);font-weight:300;min-height:100vh}
+a{color:inherit;text-decoration:none} img{display:block;width:100%}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(17,17,15,.88);backdrop-filter:blur(16px);border-bottom:1px solid rgba(181,154,104,.12);height:72px;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(24px,4vw,64px)}
+.nav-logo{font-family:var(--serif);font-size:1rem;font-weight:400;letter-spacing:.1em;text-transform:uppercase;color:var(--warm-ivory)}
+.nav-logo span{font-style:italic;font-weight:300;font-size:.82em;color:rgba(244,240,232,.45);margin-left:3px}
+.nav-back{font-family:var(--sans);font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(244,240,232,.6);display:flex;align-items:center;gap:8px;transition:color .3s}
+.nav-back:hover{color:var(--warm-ivory)}
+.nav-back svg{transition:transform .3s}
+.nav-back:hover svg{transform:translateX(-3px)}
+
+main{padding-top:72px}
+/* Article detail layout */
+.article-hero{min-height:60vh;background:var(--deep-ink);display:flex;align-items:flex-end;padding:clamp(40px,6vw,80px) clamp(24px,5vw,72px);position:relative;overflow:hidden}
+.article-hero-bg{position:absolute;inset:0}
+.article-hero-img{width:100%;height:100%;object-fit:cover;opacity:.3}
+.article-hero-arabic{position:absolute;right:5%;top:50%;transform:translateY(-50%);font-family:var(--arabic);font-size:clamp(10rem,22vw,20rem);color:rgba(181,154,104,.05);user-select:none}
+.article-hero-content{position:relative;z-index:2;max-width:780px}
+.article-meta{display:flex;align-items:center;gap:16px;margin-bottom:24px;flex-wrap:wrap}
+.article-category{font-family:var(--sans);font-size:.6rem;letter-spacing:.24em;text-transform:uppercase;color:var(--champagne)}
+.article-date{font-family:var(--sans);font-size:.6rem;letter-spacing:.12em;color:rgba(207,196,179,.5)}
+.article-author{font-family:var(--sans);font-size:.6rem;color:rgba(207,196,179,.5)}
+.article-title{font-family:var(--serif);font-size:clamp(1.8rem,4.5vw,4rem);font-weight:300;color:var(--warm-ivory);line-height:1.1;font-optical-sizing:auto}
+.article-body-wrap{max-width:780px;margin:0 auto;padding:clamp(48px,7vw,90px) clamp(24px,5vw,72px)}
+.article-excerpt{font-family:var(--serif);font-style:italic;font-size:clamp(1rem,1.8vw,1.3rem);color:var(--warm-gray);line-height:1.55;border-left:2px solid var(--champagne);padding-left:24px;margin-bottom:40px}
+.article-body{font-family:var(--sans);font-size:.88rem;line-height:1.85;color:#3A3830;white-space:pre-wrap}
+.article-body p{margin-bottom:1.4em}
+
+/* Not found / loading */
+.not-found,.loading-state{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:80vh;text-align:center;padding:40px}
+.not-found h1{font-family:var(--serif);font-size:clamp(2rem,4vw,3rem);font-weight:300;margin-bottom:16px}
+.not-found p{color:var(--warm-gray);margin-bottom:36px}
+.btn-back{display:inline-flex;align-items:center;gap:10px;padding:14px 28px;background:var(--champagne);color:var(--obsidian);font-family:var(--sans);font-size:.64rem;letter-spacing:.2em;text-transform:uppercase;font-weight:500}
+.loading-arabic{font-family:var(--arabic);font-size:4rem;color:var(--muted-sand);animation:pulse 1.8s ease infinite}
+@keyframes pulse{0%,100%{opacity:.3}50%{opacity:1}}
+
+/* More articles */
+.more-section{padding:clamp(60px,7vw,90px) clamp(24px,5vw,72px);background:var(--soft-bone);border-top:1px solid var(--muted-sand)}
+.more-title{font-family:var(--serif);font-size:clamp(1.2rem,2vw,1.6rem);font-weight:300;margin-bottom:32px}
+.more-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.more-card{cursor:pointer}
+.more-img{aspect-ratio:4/3;background:var(--deep-ink);overflow:hidden;display:flex;align-items:center;justify-content:center;margin-bottom:14px;position:relative}
+.more-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.more-arabic{font-family:var(--arabic);font-size:3.5rem;color:rgba(255,255,255,.12)}
+.j-bg-1{background:radial-gradient(ellipse 70% 60% at 40% 40%,#1e2820 0%,#0c1009 100%)}
+.j-bg-2{background:radial-gradient(ellipse 60% 70% at 55% 45%,#241e2a 0%,#0e0b12 100%)}
+.j-bg-3{background:radial-gradient(ellipse 65% 60% at 45% 40%,#2a2418 0%,#11100a 100%)}
+.more-cat{font-family:var(--sans);font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--champagne);margin-bottom:6px}
+.more-card-title{font-family:var(--serif);font-size:.95rem;color:var(--obsidian);line-height:1.3}
+@media(max-width:700px){.more-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:480px){.more-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<nav>
+  <a href="/" class="nav-logo">Harf-e-Raast <span>حرف</span></a>
+  <a href="/#journal" class="nav-back">
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" width="14" height="14"><path d="M13 8H3M7 4l-4 4 4 4"/></svg>
+    The Journal
+  </a>
+</nav>
+
+<main id="mainContent">
+  <div class="loading-state"><div class="loading-arabic">ن</div></div>
+</main>
+
+<script>
+(async function() {
+  async function fetchJSON(url) {
+    try { const r = await fetch(url); return r.ok ? r.json() : null; } catch { return null; }
+  }
+
+  const pathParts = location.pathname.replace(/\/+$/,'').split('/');
+  const slug = pathParts[pathParts.length - 1];
+
+  const manifest = await fetchJSON('/her-manifest.json');
+  const journalFiles = (manifest && manifest.journal) || [];
+
+  let article = null;
+  const allArticles = [];
+  for (const f of journalFiles) {
+    const fileSlug = f.replace(/\.json$/, '').replace(/^\d+-/, '').replace(/^\d{4}-\d{2}-\d{2}-/, '');
+    const d = await fetchJSON('/_journal/' + f);
+    if (d) {
+      d._slug = fileSlug;
+      allArticles.push(d);
+      if (fileSlug === slug && d.published !== false) article = d;
+    }
+  }
+
+  const main = document.getElementById('mainContent');
+
+  if (!article) {
+    main.innerHTML = '<div class="not-found"><h1>Journal Entry Not Found</h1><p>This article may have been unpublished or moved.</p><a href="/" class="btn-back">Return Home</a></div>';
+    return;
+  }
+
+  document.title = (article.seo_title || article.title || 'Journal') + ' — Harf-e-Raast';
+  const md = document.querySelector('meta[name="description"]');
+  if (md) md.content = article.seo_description || article.excerpt || '';
+
+  const dateStr = article.date ? new Date(article.date).toLocaleDateString('en-GB',{year:'numeric',month:'long',day:'numeric'}) : '';
+
+  const bgClasses = ['j-bg-1','j-bg-2','j-bg-3'];
+  const moreArticles = allArticles.filter(a => a._slug !== slug && a.published !== false).slice(0,3);
+
+  const moreHTML = moreArticles.length
+    ? '<section class="more-section"><div class="more-title">More from the Journal</div><div class="more-grid">' +
+        moreArticles.map((a,i) => '<div class="more-card" onclick="location.href=\'/journal/' + a._slug + '/\'">' +
+          '<div class="more-img ' + bgClasses[i%3] + '">' +
+            (a.image ? '<img src="' + a.image + '" alt="' + (a.title||'') + '">' : '<div class="more-arabic">' + (a.arabic||'') + '</div>') +
+          '</div>' +
+          (a.category ? '<div class="more-cat">' + a.category + '</div>' : '') +
+          (a.title    ? '<div class="more-card-title">' + a.title + '</div>' : '') +
+        '</div>').join('') +
+      '</div></section>'
+    : '';
+
+  main.innerHTML =
+    '<div class="article-hero">' +
+      '<div class="article-hero-bg">' +
+        (article.image ? '<img class="article-hero-img" src="' + article.image + '" alt="' + (article.title||'') + '">' : '') +
+      '</div>' +
+      (article.arabic ? '<div class="article-hero-arabic">' + article.arabic + '</div>' : '') +
+      '<div class="article-hero-content">' +
+        '<div class="article-meta">' +
+          (article.category ? '<span class="article-category">' + article.category + '</span>' : '') +
+          (dateStr ? '<span class="article-date">' + dateStr + '</span>' : '') +
+          (article.author ? '<span class="article-author">by ' + article.author + '</span>' : '') +
+        '</div>' +
+        (article.title ? '<h1 class="article-title">' + article.title + '</h1>' : '') +
+      '</div>' +
+    '</div>' +
+    '<div class="article-body-wrap">' +
+      (article.excerpt ? '<div class="article-excerpt">' + article.excerpt + '</div>' : '') +
+      (article.body   ? '<div class="article-body">'   + article.body    + '</div>' : '') +
+    '</div>' +
+    moreHTML;
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Collection — Harf-e-Raast</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,300;0,6..96,400;1,6..96,300&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500&family=Noto+Naskh+Arabic:wght@400&display=swap" rel="stylesheet">
+<style>
+:root{--obsidian:#11110F;--deep-ink:#171714;--warm-ivory:#F4F0E8;--soft-bone:#E8E1D5;--muted-sand:#CFC4B3;--champagne:#B59A68;--warm-gray:#777269;--serif:'Bodoni Moda',Georgia,serif;--sans:'DM Sans',system-ui,sans-serif;--arabic:'Noto Naskh Arabic',serif;--ease:cubic-bezier(0.19,1,0.22,1)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--sans);background:var(--warm-ivory);color:var(--obsidian);font-weight:300;min-height:100vh}
+a{color:inherit;text-decoration:none}
+img{display:block;width:100%}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(17,17,15,.88);backdrop-filter:blur(16px);border-bottom:1px solid rgba(181,154,104,.12);height:72px;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(24px,4vw,64px)}
+.nav-logo{font-family:var(--serif);font-size:1rem;font-weight:400;letter-spacing:.1em;text-transform:uppercase;color:var(--warm-ivory)}
+.nav-logo span{font-style:italic;font-weight:300;font-size:.82em;color:rgba(244,240,232,.45);margin-left:3px}
+.nav-back{font-family:var(--sans);font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(244,240,232,.6);display:flex;align-items:center;gap:8px;transition:color .3s}
+.nav-back:hover{color:var(--warm-ivory)}
+.nav-back svg{transition:transform .3s}
+.nav-back:hover svg{transform:translateX(-3px)}
+
+main{padding-top:72px}
+.col-hero{min-height:55vh;display:flex;align-items:flex-end;padding:clamp(40px,6vw,80px) clamp(24px,5vw,72px);background:var(--deep-ink);position:relative;overflow:hidden}
+.col-hero-bg{position:absolute;inset:0}
+.col-hero-arabic{position:absolute;right:5%;top:50%;transform:translateY(-50%);font-family:var(--arabic);font-size:clamp(12rem,28vw,24rem);color:rgba(181,154,104,.06);user-select:none;pointer-events:none}
+.col-hero-bg-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.25}
+.col-hero-content{position:relative;z-index:2}
+.col-hero-eyebrow{font-family:var(--sans);font-size:.6rem;letter-spacing:.28em;text-transform:uppercase;color:var(--champagne);margin-bottom:20px;display:flex;align-items:center;gap:14px}
+.col-hero-eyebrow::before{content:'';width:28px;height:1px;background:var(--champagne);opacity:.6}
+.col-hero-title{font-family:var(--serif);font-size:clamp(2.4rem,6vw,5.5rem);font-weight:300;color:var(--warm-ivory);line-height:1.05;font-optical-sizing:auto;margin-bottom:20px}
+.col-hero-desc{font-family:var(--sans);font-size:.84rem;line-height:1.72;color:var(--muted-sand);max-width:560px}
+
+.col-products{padding:clamp(60px,8vw,100px) clamp(24px,5vw,72px)}
+.col-products-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:clamp(40px,5vw,64px)}
+.col-products-title{font-family:var(--serif);font-size:clamp(1.4rem,2.5vw,2rem);font-weight:300}
+.col-count{font-family:var(--sans);font-size:.7rem;color:var(--warm-gray);letter-spacing:.08em}
+.products-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(16px,2.5vw,32px)}
+.product-card{cursor:pointer}
+.product-card:nth-child(2){margin-top:32px}
+.product-card:nth-child(3n){margin-top:16px}
+.product-img{aspect-ratio:3/4;background:var(--deep-ink);position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;margin-bottom:18px}
+.product-img-inner{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .7s var(--ease)}
+.product-card:hover .product-img-inner{transform:scale(1.04)}
+.product-arabic{font-family:var(--arabic);font-size:5rem;color:rgba(255,255,255,.12);position:relative;z-index:1;transition:color .4s}
+.product-card:hover .product-arabic{color:rgba(255,255,255,.2)}
+.p-col-1{background:radial-gradient(ellipse 60% 70% at 50% 40%,#2c321e 0%,#111410 100%)}
+.p-col-2{background:radial-gradient(ellipse 60% 70% at 50% 40%,#1e1c2d 0%,#0f0e14 100%)}
+.p-col-3{background:radial-gradient(ellipse 60% 70% at 50% 40%,#2d2820 0%,#13100c 100%)}
+.p-col-4{background:radial-gradient(ellipse 60% 70% at 50% 40%,#1f2c2a 0%,#0d1211 100%)}
+.product-view{position:absolute;bottom:16px;left:50%;transform:translateX(-50%) translateY(8px);background:var(--warm-ivory);color:var(--obsidian);font-family:var(--sans);font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;padding:9px 18px;opacity:0;transition:opacity .3s,transform .3s;white-space:nowrap;z-index:10}
+.product-card:hover .product-view{opacity:1;transform:translateX(-50%) translateY(0)}
+.product-collection{font-family:var(--sans);font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;color:var(--champagne);margin-bottom:6px}
+.product-name{font-family:var(--serif);font-size:1.05rem;font-weight:400;color:var(--obsidian);margin-bottom:5px;font-optical-sizing:auto}
+.product-price{font-family:var(--sans);font-size:.78rem;color:var(--warm-gray)}
+
+.empty-state{text-align:center;padding:80px 20px;color:var(--warm-gray);font-family:var(--serif);font-style:italic;font-size:1.1rem}
+.loading-state{display:flex;align-items:center;justify-content:center;min-height:60vh}
+.loading-arabic{font-family:var(--arabic);font-size:4rem;color:var(--muted-sand);animation:pulse 1.8s ease infinite}
+@keyframes pulse{0%,100%{opacity:.3}50%{opacity:1}}
+.not-found{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:80vh;text-align:center;padding:40px}
+.not-found h1{font-family:var(--serif);font-size:clamp(2rem,4vw,3rem);font-weight:300;margin-bottom:16px}
+.not-found p{color:var(--warm-gray);margin-bottom:36px}
+.btn-back{display:inline-flex;align-items:center;gap:10px;padding:14px 28px;background:var(--champagne);color:var(--obsidian);font-family:var(--sans);font-size:.64rem;letter-spacing:.2em;text-transform:uppercase;font-weight:500}
+
+@media(max-width:900px){.products-grid{grid-template-columns:1fr 1fr}.product-card:nth-child(2),.product-card:nth-child(3n){margin-top:0}}
+@media(max-width:560px){.products-grid{grid-template-columns:1fr 1fr;gap:12px}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo">Harf-e-Raast <span>حرف</span></a>
+  <a href="/" class="nav-back">
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" width="14" height="14"><path d="M13 8H3M7 4l-4 4 4 4"/></svg>
+    All Collections
+  </a>
+</nav>
+
+<main id="mainContent">
+  <div class="loading-state"><div class="loading-arabic">ح</div></div>
+</main>
+
+<script>
+(async function() {
+  async function fetchJSON(url) {
+    try { const r = await fetch(url); return r.ok ? r.json() : null; } catch { return null; }
+  }
+
+  const pathParts = location.pathname.replace(/\/+$/,'').split('/');
+  const slug = pathParts[pathParts.length - 1];
+
+  const [manifest, features] = await Promise.all([
+    fetchJSON('/her-manifest.json'),
+    fetchJSON('/_data/features.json'),
+  ]);
+
+  const collectionFiles = (manifest && manifest.collections) || [];
+  const productFiles    = (manifest && manifest.products)    || [];
+
+  let collection = null;
+  for (const f of collectionFiles) {
+    const fileSlug = f.replace(/\.json$/, '').replace(/^\d+-/, '');
+    if (fileSlug === slug) {
+      collection = await fetchJSON('/_collections/' + f);
+      if (collection) collection._slug = fileSlug;
+      break;
+    }
+  }
+
+  const allProducts = [];
+  for (const f of productFiles) {
+    const d = await fetchJSON('/_products/' + f);
+    if (d && d.enabled !== false) {
+      d._slug = f.replace(/\.json$/, '').replace(/^\d+-/, '');
+      allProducts.push(d);
+    }
+  }
+
+  const main = document.getElementById('mainContent');
+  const f = features || {};
+
+  if (!collection) {
+    main.innerHTML = '<div class="not-found"><h1>Collection Not Found</h1><p>This collection may have been moved or renamed.</p><a href="/" class="btn-back">Return Home</a></div>';
+    return;
+  }
+
+  document.title = (collection.name || 'Collection') + ' Collection — Harf-e-Raast';
+
+  const colProducts = allProducts
+    .filter(p => p.collection === collection.name)
+    .sort((a,b) => (a.order||0)-(b.order||0));
+
+  const salesOn = f.sales !== false;
+
+  const productsHTML = colProducts.length === 0
+    ? '<div class="empty-state">No artworks in this collection yet.</div>'
+    : colProducts.map((p, i) => {
+        const href = '/product/' + p._slug + '/';
+        const hasSale = salesOn && p.sale_enabled && p.sale_label;
+        const bgClass = p.bg_class || ['p-col-1','p-col-2','p-col-3','p-col-4'][i % 4];
+        return '<div class="product-card" onclick="location.href=\'' + href + '\'">' +
+          '<div class="product-img ' + bgClass + '">' +
+            (p.image ? '<img class="product-img-inner" src="' + p.image + '" alt="' + (p.name||'') + '">' : '<div class="product-arabic">' + (p.arabic||'') + '</div>') +
+            '<div class="product-view">View Artwork</div>' +
+          '</div>' +
+          (p.name  ? '<div class="product-name">'       + p.name  + '</div>' : '') +
+          (p.price ? '<div class="product-price">' + (p.original_price && hasSale ? '<span style="text-decoration:line-through;margin-right:6px;font-size:.7rem;color:#999">' + p.original_price + '</span>' : '') + p.price + '</div>' : '') +
+        '</div>';
+      }).join('');
+
+  const bgImgHTML = collection.image
+    ? '<img class="col-hero-bg-img" src="' + collection.image + '" alt="' + (collection.name||'') + '">'
+    : '';
+
+  main.innerHTML =
+    '<div class="col-hero">' +
+      '<div class="col-hero-bg">' + bgImgHTML + '</div>' +
+      '<div class="col-hero-arabic">' + (collection.arabic||'') + '</div>' +
+      '<div class="col-hero-content">' +
+        (collection.tag ? '<div class="col-hero-eyebrow">' + collection.tag + '</div>' : '') +
+        (collection.name ? '<h1 class="col-hero-title">' + collection.name + '</h1>' : '') +
+        (collection.description ? '<p class="col-hero-desc">' + collection.description + '</p>' : '') +
+      '</div>' +
+    '</div>' +
+    '<section class="col-products">' +
+      '<div class="col-products-header">' +
+        '<div class="col-products-title">The Works</div>' +
+        '<div class="col-count">' + colProducts.length + ' artwork' + (colProducts.length!==1?'s':'') + '</div>' +
+      '</div>' +
+      '<div class="products-grid">' + productsHTML + '</div>' +
+    '</section>';
+})();
+</script>
+</body>
+</html>

@@ -16,5 +16,8 @@
     "02-the-geometry-behind-beauty.json",
     "03-a-study-in-stillness.json"
   ],
-  "pages": []
+  "pages": [
+    "about.json",
+    "commission.json"
+  ]
 }

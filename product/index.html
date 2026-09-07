@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Artwork — Harf-e-Raast</title>
+<meta name="description" content="">
+<meta property="og:title" content="">
+<meta property="og:description" content="">
+<meta property="og:type" content="product">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,300;0,6..96,400;1,6..96,300;1,6..96,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=Noto+Naskh+Arabic:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --obsidian:#11110F; --deep-ink:#171714; --warm-ivory:#F4F0E8;
+  --soft-bone:#E8E1D5; --muted-sand:#CFC4B3; --champagne:#B59A68;
+  --dark-olive:#4A4C3A; --warm-gray:#777269;
+  --serif:'Bodoni Moda',Georgia,serif;
+  --sans:'DM Sans',system-ui,sans-serif;
+  --arabic:'Noto Naskh Arabic',serif;
+  --ease:cubic-bezier(0.19,1,0.22,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--warm-ivory);color:var(--obsidian);font-weight:300;line-height:1.6;min-height:100vh}
+a{color:inherit;text-decoration:none}
+img{display:block;width:100%}
+button{font-family:var(--sans);cursor:pointer;border:none;background:none}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(17,17,15,.88);backdrop-filter:blur(16px);border-bottom:1px solid rgba(181,154,104,.12);height:72px;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(24px,4vw,64px)}
+.nav-logo{font-family:var(--serif);font-size:1rem;font-weight:400;letter-spacing:.1em;text-transform:uppercase;color:var(--warm-ivory)}
+.nav-logo span{font-style:italic;font-weight:300;font-size:.82em;color:rgba(244,240,232,.45);margin-left:3px}
+.nav-back{font-family:var(--sans);font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(244,240,232,.6);display:flex;align-items:center;gap:8px;transition:color .3s}
+.nav-back:hover{color:var(--warm-ivory)}
+.nav-back svg{transition:transform .3s}
+.nav-back:hover svg{transform:translateX(-3px)}
+
+/* MAIN LAYOUT */
+main{padding-top:72px;min-height:100vh}
+.product-layout{display:grid;grid-template-columns:1fr 1fr;min-height:calc(100vh - 72px)}
+
+/* GALLERY SIDE */
+.product-gallery{position:sticky;top:72px;height:calc(100vh - 72px);background:var(--deep-ink);overflow:hidden;display:flex;align-items:center;justify-content:center}
+.gallery-main{position:relative;width:100%;height:100%}
+.gallery-img{width:100%;height:100%;object-fit:contain;padding:40px}
+.gallery-placeholder{display:flex;align-items:center;justify-content:center;height:100%;background:radial-gradient(ellipse 70% 70% at 50% 40%,#1C1B12 0%,#0d0d0a 100%)}
+.gallery-arabic{font-family:var(--arabic);font-size:clamp(8rem,20vw,18rem);color:rgba(181,154,104,.18);user-select:none}
+.gallery-thumbs{position:absolute;bottom:24px;left:50%;transform:translateX(-50%);display:flex;gap:8px;z-index:10}
+.gallery-thumb{width:48px;height:48px;object-fit:cover;border:2px solid transparent;cursor:pointer;transition:border-color .2s;opacity:.6}
+.gallery-thumb.active,.gallery-thumb:hover{border-color:var(--champagne);opacity:1}
+.gallery-num{position:absolute;top:20px;left:24px;font-family:var(--sans);font-size:.58rem;letter-spacing:.2em;color:rgba(207,196,179,.4);text-transform:uppercase}
+
+/* INFO SIDE */
+.product-info{padding:clamp(40px,6vw,80px) clamp(32px,5vw,72px);display:flex;flex-direction:column;justify-content:center;min-height:calc(100vh - 72px);background:var(--warm-ivory)}
+.product-eyebrow{font-family:var(--sans);font-size:.6rem;letter-spacing:.28em;text-transform:uppercase;color:var(--champagne);margin-bottom:20px;display:flex;align-items:center;gap:14px}
+.product-eyebrow::before{content:'';width:28px;height:1px;background:var(--champagne);opacity:.6}
+.product-title{font-family:var(--serif);font-size:clamp(2rem,4.5vw,3.8rem);font-weight:300;line-height:1.08;color:var(--obsidian);margin-bottom:24px;font-optical-sizing:auto}
+.product-title em{font-style:italic;color:var(--warm-gray)}
+.product-short{font-family:var(--sans);font-size:.84rem;line-height:1.72;color:var(--warm-gray);margin-bottom:32px;max-width:480px}
+.product-price-wrap{display:flex;align-items:baseline;gap:14px;margin-bottom:40px;padding-bottom:32px;border-bottom:1px solid var(--muted-sand)}
+.product-price{font-family:var(--serif);font-size:1.8rem;font-weight:400;color:var(--obsidian)}
+.product-orig-price{font-family:var(--sans);font-size:.88rem;text-decoration:line-through;color:var(--warm-gray)}
+.product-sale-badge{font-family:var(--sans);font-size:.6rem;letter-spacing:.12em;background:var(--champagne);color:var(--obsidian);padding:3px 10px;font-weight:500}
+
+/* Meta grid */
+.product-meta{display:grid;grid-template-columns:1fr 1fr;gap:20px 32px;margin-bottom:40px}
+.meta-item{}
+.meta-label{font-family:var(--sans);font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;color:var(--warm-gray);margin-bottom:3px}
+.meta-value{font-family:var(--serif);font-size:.95rem;color:var(--obsidian)}
+
+/* CTA */
+.product-ctas{display:flex;flex-direction:column;gap:12px;margin-bottom:40px}
+.btn-primary{display:inline-flex;align-items:center;gap:14px;padding:15px 28px;background:var(--champagne);color:var(--obsidian);font-family:var(--sans);font-size:.64rem;letter-spacing:.22em;text-transform:uppercase;font-weight:500;position:relative;overflow:hidden;transition:gap .4s var(--ease);cursor:pointer;width:fit-content}
+.btn-primary::before{content:'';position:absolute;inset:0;background:var(--obsidian);transform:translateX(-101%);transition:transform .45s var(--ease)}
+.btn-primary:hover::before{transform:translateX(0)}
+.btn-primary:hover{gap:22px;color:var(--warm-ivory)}
+.btn-primary span,.btn-primary svg{position:relative;z-index:1}
+.btn-primary svg{width:14px;height:14px;transition:transform .3s}
+.btn-primary:hover svg{transform:translateX(4px)}
+.btn-whatsapp{display:inline-flex;align-items:center;gap:10px;padding:14px 0;font-family:var(--sans);font-size:.64rem;letter-spacing:.18em;text-transform:uppercase;color:var(--warm-gray);border-bottom:1px solid rgba(0,0,0,.12);width:fit-content;transition:color .3s,gap .3s}
+.btn-whatsapp:hover{color:var(--obsidian);gap:14px}
+.btn-customize{display:inline-flex;align-items:center;gap:10px;padding:14px 0;font-family:var(--sans);font-size:.64rem;letter-spacing:.18em;text-transform:uppercase;color:var(--warm-gray);border-bottom:1px solid rgba(0,0,0,.12);width:fit-content;transition:color .3s,gap .3s}
+.btn-customize:hover{color:var(--obsidian)}
+
+/* Story */
+.product-story-section{padding:clamp(60px,8vw,100px) clamp(32px,5vw,72px);background:var(--soft-bone);border-top:1px solid var(--muted-sand)}
+.story-eyebrow{font-family:var(--sans);font-size:.6rem;letter-spacing:.28em;text-transform:uppercase;color:var(--champagne);margin-bottom:24px}
+.story-title{font-family:var(--serif);font-size:clamp(1.4rem,2.5vw,2rem);font-weight:300;margin-bottom:20px}
+.story-body{font-family:var(--sans);font-size:.84rem;line-height:1.8;color:var(--warm-gray);max-width:680px;white-space:pre-wrap}
+
+/* Related */
+.related-section{padding:clamp(60px,8vw,100px) clamp(32px,5vw,72px);background:var(--warm-ivory)}
+.related-title{font-family:var(--serif);font-size:clamp(1.4rem,2.5vw,2rem);font-weight:300;margin-bottom:40px}
+.related-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.related-card{cursor:pointer;transition:opacity .3s}
+.related-card:hover{opacity:.8}
+.related-img{aspect-ratio:3/4;background:var(--deep-ink);margin-bottom:12px;overflow:hidden;display:flex;align-items:center;justify-content:center;position:relative}
+.related-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.related-arabic{font-family:var(--arabic);font-size:4rem;color:rgba(255,255,255,.12)}
+.related-name{font-family:var(--serif);font-size:1rem;color:var(--obsidian);margin-bottom:4px}
+.related-price{font-family:var(--sans);font-size:.76rem;color:var(--warm-gray)}
+
+/* Not found */
+.not-found{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:80vh;text-align:center;padding:40px}
+.not-found h1{font-family:var(--serif);font-size:clamp(2rem,4vw,3rem);font-weight:300;margin-bottom:16px}
+.not-found p{font-family:var(--sans);color:var(--warm-gray);margin-bottom:36px}
+
+/* Loading */
+.loading-state{display:flex;align-items:center;justify-content:center;min-height:80vh}
+.loading-arabic{font-family:var(--arabic);font-size:4rem;color:var(--muted-sand);animation:pulse 1.8s ease infinite}
+@keyframes pulse{0%,100%{opacity:.3}50%{opacity:1}}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .product-layout{grid-template-columns:1fr}
+  .product-gallery{position:relative;height:70vw;min-height:300px}
+  .related-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:560px){
+  .product-meta{grid-template-columns:1fr}
+  .related-grid{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo">Harf-e-Raast <span>حرف</span></a>
+  <a href="/" class="nav-back" id="navBack">
+    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" width="14" height="14"><path d="M13 8H3M7 4l-4 4 4 4"/></svg>
+    Back to Collection
+  </a>
+</nav>
+
+<main id="mainContent">
+  <div class="loading-state"><div class="loading-arabic">ح</div></div>
+</main>
+
+<script>
+(async function() {
+  async function fetchJSON(url) {
+    try { const r = await fetch(url); return r.ok ? r.json() : null; } catch { return null; }
+  }
+
+  // Get slug from URL: /product/noor-i/ → "noor-i"
+  const pathParts = location.pathname.replace(/\/+$/,'').split('/');
+  const slug = pathParts[pathParts.length - 1];
+
+  const [manifest, settings, features, shipping] = await Promise.all([
+    fetchJSON('/her-manifest.json'),
+    fetchJSON('/_data/settings.json'),
+    fetchJSON('/_data/features.json'),
+    fetchJSON('/_data/shipping.json'),
+  ]);
+
+  // Find the product file that matches the slug
+  const productFiles = (manifest && manifest.products) || [];
+  let product = null;
+  for (const f of productFiles) {
+    const fileSlug = f.replace(/\.json$/, '').replace(/^\d+-/, '');
+    if (fileSlug === slug) {
+      product = await fetchJSON('/_products/' + f);
+      if (product) product._slug = fileSlug;
+      break;
+    }
+  }
+
+  // Load all products for "related" section
+  const allProducts = [];
+  for (const f of productFiles) {
+    const d = await fetchJSON('/_products/' + f);
+    if (d && d.enabled !== false) {
+      d._slug = f.replace(/\.json$/, '').replace(/^\d+-/, '');
+      allProducts.push(d);
+    }
+  }
+
+  // Load collections for label
+  const collectionFiles = (manifest && manifest.collections) || [];
+  const allCollections = [];
+  for (const f of collectionFiles) {
+    const d = await fetchJSON('/_collections/' + f);
+    if (d) { d._slug = f.replace(/\.json$/, '').replace(/^\d+-/, ''); allCollections.push(d); }
+  }
+
+  const main = document.getElementById('mainContent');
+
+  if (!product) {
+    main.innerHTML = '<div class="not-found"><h1>Artwork Not Found</h1><p>This artwork may have been removed or the link is incorrect.</p><a href="/" class="btn-primary"><span>Return to Collection</span><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a></div>';
+    return;
+  }
+
+  // SEO
+  if (product.seo_title || product.name) document.title = (product.seo_title || product.name) + ' — Harf-e-Raast';
+  const md = document.querySelector('meta[name="description"]');
+  if (md) md.content = product.seo_description || product.short_desc || '';
+  const ogT = document.querySelector('meta[property="og:title"]');
+  if (ogT) ogT.content = product.name || '';
+  const ogD = document.querySelector('meta[property="og:description"]');
+  if (ogD) ogD.content = product.short_desc || '';
+  if (product.og_image || product.image) {
+    let ogI = document.querySelector('meta[property="og:image"]');
+    if (!ogI) { ogI = document.createElement('meta'); ogI.setAttribute('property','og:image'); document.head.appendChild(ogI); }
+    ogI.content = product.og_image || product.image;
+  }
+
+  // Collection label
+  const col = allCollections.find(c => c.name === product.collection);
+  const colLabel = col ? col.name : (product.collection || '');
+  const colSlug  = col ? col._slug : '';
+
+  // WhatsApp
+  const waNum = (settings && (settings.whatsapp_number || settings.whatsapp) || '').replace(/\D/g,'');
+  const waMsg = encodeURIComponent('Hello Harf-e-Raast, I am interested in "' + (product.name||'this artwork') + '". Please share more details.');
+  const waUrl = waNum ? 'https://wa.me/' + waNum + '?text=' + waMsg : '#';
+
+  // Gallery images
+  const images = [product.image, ...(product.images || [])].filter(Boolean);
+  const hasImages = images.length > 0;
+  let currentImg = 0;
+
+  // Price display
+  const f = features || {};
+  const hasSale = f.sales !== false && product.sale_enabled && product.sale_label;
+
+  // Related products (same collection, exclude current)
+  const related = allProducts.filter(p => p._slug !== slug && (!product.collection || p.collection === product.collection)).slice(0,3);
+
+  // Build HTML
+  const galleryHTML = hasImages
+    ? '<div class="gallery-main">' +
+        '<img id="galleryMainImg" class="gallery-img" src="' + images[0] + '" alt="' + (product.name||'') + '">' +
+        (images.length > 1 ? '<div class="gallery-thumbs">' + images.map((img,i) => '<img class="gallery-thumb' + (i===0?' active':'') + '" src="' + img + '" alt="" data-index="' + i + '" onclick="switchImg(' + i + ')">' ).join('') + '</div>' : '') +
+        '<div class="gallery-num">Harf-e-Raast</div>' +
+      '</div>'
+    : '<div class="gallery-placeholder"><div class="gallery-arabic">' + (product.arabic||'ح') + '</div></div>';
+
+  const priceHTML = (product.price || hasSale)
+    ? '<div class="product-price-wrap">' +
+        (product.price ? '<div class="product-price">' + product.price + '</div>' : '') +
+        (product.original_price && hasSale ? '<div class="product-orig-price">' + product.original_price + '</div>' : '') +
+        (hasSale ? '<div class="product-sale-badge">' + product.sale_label + '</div>' : '') +
+      '</div>'
+    : '';
+
+  const metaFields = [
+    product.materials  ? { label:'Materials',  value: product.materials  } : null,
+    product.dimensions ? { label:'Dimensions', value: product.dimensions } : null,
+    product.edition    ? { label:'Edition',    value: product.edition    } : null,
+    colLabel           ? { label:'Collection', value: colLabel           } : null,
+    product.sku        ? { label:'SKU',        value: product.sku        } : null,
+  ].filter(Boolean);
+
+  const metaHTML = metaFields.length
+    ? '<div class="product-meta">' + metaFields.map(m =>
+        '<div class="meta-item"><div class="meta-label">' + m.label + '</div><div class="meta-value">' + m.value + '</div></div>'
+      ).join('') + '</div>'
+    : '';
+
+  const relatedHTML = related.length
+    ? '<section class="related-section"><div class="related-title">More from ' + (colLabel || 'the Collection') + '</div><div class="related-grid">' +
+        related.map(p => '<div class="related-card" onclick="location.href=\'/product/' + p._slug + '/\'">' +
+          '<div class="related-img">' +
+            (p.image ? '<img src="' + p.image + '" alt="' + (p.name||'') + '">' : '<div class="related-arabic">' + (p.arabic||'') + '</div>') +
+          '</div>' +
+          (p.name  ? '<div class="related-name">' + p.name + '</div>' : '') +
+          (p.price ? '<div class="related-price">' + p.price + '</div>' : '') +
+        '</div>').join('') +
+      '</div></section>'
+    : '';
+
+  const storyHTML = (product.description || product.story)
+    ? '<section class="product-story-section">' +
+        '<div class="story-eyebrow">The Story Behind the Piece</div>' +
+        (product.description ? '<div class="story-body">' + product.description + '</div>' : '') +
+        (product.story && product.story !== product.description ? '<div class="story-body" style="margin-top:20px">' + product.story + '</div>' : '') +
+      '</section>'
+    : '';
+
+  main.innerHTML =
+    '<div class="product-layout">' +
+      '<div class="product-gallery">' + galleryHTML + '</div>' +
+      '<div class="product-info">' +
+        (colLabel ? '<div class="product-eyebrow">' + colLabel + ' Collection</div>' : '') +
+        (product.name ? '<h1 class="product-title">' + product.name + '</h1>' : '') +
+        (product.short_desc ? '<p class="product-short">' + product.short_desc + '</p>' : '') +
+        priceHTML +
+        metaHTML +
+        '<div class="product-ctas">' +
+          '<button class="btn-primary" onclick="addToBag()"><span>Add to Bag</span><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>' +
+          (waNum ? '<a href="' + waUrl + '" target="_blank" rel="noopener" class="btn-whatsapp">Discuss on WhatsApp <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" width="14" height="14"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>' : '') +
+          '<a href="/customize-artwork/" class="btn-customize">Customize This Artwork <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" width="14" height="14"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>' +
+        '</div>' +
+      '</div>' +
+    '</div>' +
+    storyHTML +
+    relatedHTML;
+
+  // Back link
+  const backLink = document.getElementById('navBack');
+  if (backLink && colSlug) { backLink.href = '/collection/' + colSlug + '/'; backLink.querySelector('svg + text') }
+
+  // Gallery switcher
+  window.switchImg = function(i) {
+    const mainImg = document.getElementById('galleryMainImg');
+    if (!mainImg) return;
+    mainImg.src = images[i];
+    document.querySelectorAll('.gallery-thumb').forEach((t,ti) => t.classList.toggle('active', ti===i));
+    currentImg = i;
+  };
+
+  // Add to bag — simple session store (integrates with any future cart)
+  window.addToBag = function() {
+    const cart = JSON.parse(sessionStorage.getItem('her_cart') || '[]');
+    const existing = cart.find(i => i.slug === product._slug);
+    if (existing) { existing.qty = (existing.qty||1) + 1; }
+    else { cart.push({ slug:product._slug, name:product.name, price:product.price, image:product.image, qty:1 }); }
+    sessionStorage.setItem('her_cart', JSON.stringify(cart));
+    // Visual feedback
+    const btn = document.querySelector('.btn-primary span');
+    if (btn) {
+      const orig = btn.textContent;
+      btn.textContent = 'Added to Bag ✓';
+      setTimeout(() => { btn.textContent = orig; }, 2000);
+    }
+  };
+})();
+</script>
+</body>
+</html>

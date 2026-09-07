@@ -304,6 +304,7 @@ collections:
           - { label: "Pinterest URL",         name: pinterest,        widget: string,  required: false }
           - { label: "LinkedIn URL",          name: linkedin,         widget: string,  required: false }
           - { label: "WhatsApp Link",         name: whatsapp,         widget: string,  required: false }
+          - { label: "WhatsApp Number (commission links)", name: whatsapp_number, widget: string, required: false, hint: "International format without + or spaces. e.g. 923001234567" }
           - { label: "Footer Copyright Text", name: copyright,        widget: string,  required: false }
           - { label: "Logo",                 name: logo,              widget: image,   required: false }
           - { label: "Favicon",              name: favicon,           widget: image,   required: false }
