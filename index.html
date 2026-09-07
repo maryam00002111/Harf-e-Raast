@@ -1438,6 +1438,13 @@ footer {
   color: var(--warm-gray);
 }
 .cart-items { flex: 1; padding: 24px 32px; overflow-y: auto; }
+.cart-item { display: flex; gap: 16px; align-items: center; padding: 16px 0; border-bottom: 1px solid rgba(0,0,0,.08); }
+.cart-item img { width: 64px; height: 64px; object-fit: cover; border-radius: 4px; }
+.cart-item-info { flex: 1; }
+.cart-item-name { font-size: .85rem; margin-bottom: 4px; }
+.cart-item-price { font-size: .75rem; opacity: .7; }
+.cart-item-remove { font-size: .65rem; text-transform: uppercase; letter-spacing: .05em; opacity: .6; }
+.cart-item-remove:hover { opacity: 1; }
 .cart-empty {
   font-family: var(--serif);
   font-style: italic;
@@ -1800,7 +1807,7 @@ body,
   </ul>
   <div class="nav-right">
     <span class="nav-icon" style="cursor:pointer;" onclick="openCart()">
-      Bag <span class="cart-count">0</span>
+      Bag <span class="cart-count" id="cartCount">0</span>
     </span>
   </div>
 </nav>
@@ -2352,13 +2359,13 @@ body,
       <div class="cart-drawer-title">Your Bag</div>
       <button class="cart-close" onclick="closeCart()">Close ×</button>
     </div>
-    <div class="cart-items">
-      <div class="cart-empty">Your bag is empty.</div>
-    </div>
+    <div class="cart-items" id="cartItems">
+  <div class="cart-empty">Your bag is empty.</div>
+ </div>
     <div class="cart-footer">
       <div class="cart-total">
         <div class="cart-total-label">Total</div>
-        <div class="cart-total-price">PKR 0</div>
+        <div class="cart-total-price" id="cartTotalPrice">PKR 0</div>
       </div>
       <a href="#" class="btn-primary" style="width:100%; justify-content:center;">
         <span>Proceed to Checkout</span>
@@ -2482,8 +2489,60 @@ if (stText) {
 }
 
 /* ── CART ───────────────────────────────────────────────────── */
-function openCart()  { document.getElementById('cartOverlay').classList.add('open'); }
+/* ── CART ───────────────────────────────────────────────────── */
+function getCart() {
+  return JSON.parse(localStorage.getItem('her_cart') || '[]');
+}
+
+function renderCart() {
+  const cart = getCart();
+  const countEl = document.getElementById('cartCount');
+  const itemsEl = document.getElementById('cartItems');
+  const totalEl = document.getElementById('cartTotalPrice');
+  if (!itemsEl) return;
+
+  // 1. Update the little number on the Bag icon
+  const totalQty = cart.reduce((sum, item) => sum + (item.qty || 1), 0);
+  if (countEl) countEl.textContent = totalQty;
+
+  // 2. If cart is empty, show the old message
+  if (cart.length === 0) {
+    itemsEl.innerHTML = '<div class="cart-empty">Your bag is empty.</div>';
+    if (totalEl) totalEl.textContent = 'PKR 0';
+    return;
+  }
+
+  // 3. Otherwise, build one row per item
+  let total = 0;
+  itemsEl.innerHTML = cart.map((item, index) => {
+    const priceNum = parseFloat((item.price || '0').toString().replace(/[^0-9.]/g, '')) || 0;
+    total += priceNum * (item.qty || 1);
+    return '<div class="cart-item">' +
+             (item.image ? '<img src="' + item.image + '" alt="' + (item.name||'') + '">' : '') +
+             '<div class="cart-item-info">' +
+               '<div class="cart-item-name">' + (item.name||'') + '</div>' +
+               '<div class="cart-item-price">' + (item.price||'') + ' × ' + (item.qty||1) + '</div>' +
+             '</div>' +
+             '<button class="cart-item-remove" onclick="removeFromCart(' + index + ')">Remove</button>' +
+           '</div>';
+  }).join('');
+
+  if (totalEl) totalEl.textContent = 'PKR ' + total;
+}
+
+function removeFromCart(index) {
+  const cart = getCart();
+  cart.splice(index, 1);
+  localStorage.setItem('her_cart', JSON.stringify(cart));
+  renderCart();
+}
+
+function openCart()  { renderCart(); document.getElementById('cartOverlay').classList.add('open'); }
 function closeCart() { document.getElementById('cartOverlay').classList.remove('open'); }
+
+// Draw the cart once as soon as the page loads, so the Bag icon
+// number is correct even before anyone clicks it
+renderCart();
 
 /* ── SMOOTH SCROLL ──────────────────────────────────────────── */
 document.querySelectorAll('a[href^="#"]').forEach(a => {
