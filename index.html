@@ -1491,7 +1491,7 @@ footer {
   .hero {
     grid-template-columns: 1fr;
     grid-template-rows: auto 55vw;
- }
+  }
   .hero-left {
     justify-content: flex-end;
     min-height: auto;
@@ -1563,9 +1563,10 @@ footer {
   .btn-primary, .btn-ghost { font-size: .6rem; }
 }
 
-@media (min-width: 1440px) {
-  html { font-size: 18px; }
+@media (min-width: 1025px) {
+  html { font-size: 19px; }
 }
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: .01ms !important;
@@ -2363,8 +2364,8 @@ body,
       <button class="cart-close" onclick="closeCart()">Close ×</button>
     </div>
     <div class="cart-items" id="cartItems">
-  <div class="cart-empty">Your bag is empty.</div>
- </div>
+      <div class="cart-empty">Your bag is empty.</div>
+    </div>
     <div class="cart-footer">
       <div class="cart-total">
         <div class="cart-total-label">Total</div>
@@ -2492,7 +2493,6 @@ if (stText) {
 }
 
 /* ── CART ───────────────────────────────────────────────────── */
-/* ── CART ───────────────────────────────────────────────────── */
 function getCart() {
   return JSON.parse(localStorage.getItem('her_cart') || '[]');
 }
@@ -2504,18 +2504,15 @@ function renderCart() {
   const totalEl = document.getElementById('cartTotalPrice');
   if (!itemsEl) return;
 
-  // 1. Update the little number on the Bag icon
   const totalQty = cart.reduce((sum, item) => sum + (item.qty || 1), 0);
   if (countEl) countEl.textContent = totalQty;
 
-  // 2. If cart is empty, show the old message
   if (cart.length === 0) {
     itemsEl.innerHTML = '<div class="cart-empty">Your bag is empty.</div>';
     if (totalEl) totalEl.textContent = 'PKR 0';
     return;
   }
 
-  // 3. Otherwise, build one row per item
   let total = 0;
   itemsEl.innerHTML = cart.map((item, index) => {
     const priceNum = parseFloat((item.price || '0').toString().replace(/[^0-9.]/g, '')) || 0;
@@ -2543,8 +2540,6 @@ function removeFromCart(index) {
 function openCart()  { renderCart(); document.getElementById('cartOverlay').classList.add('open'); }
 function closeCart() { document.getElementById('cartOverlay').classList.remove('open'); }
 
-// Draw the cart once as soon as the page loads, so the Bag icon
-// number is correct even before anyone clicks it
 renderCart();
 
 /* ── SMOOTH SCROLL ──────────────────────────────────────────── */
