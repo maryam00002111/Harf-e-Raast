@@ -288,8 +288,8 @@ main{padding-top:72px;min-height:100vh}
         priceHTML +
         metaHTML +
         '<div class="product-ctas">' +
-          '<button class="btn-primary" onclick="addToBag()"><span>Add to Bag</span><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>' +
-          '<button class="btn-primary" onclick="buyNow()"><span>Buy Now</span><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>' +
+          '<button class="btn-primary" onclick="addToBag(this)"><span>Add to Bag</span><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>' +
+          '<button class="btn-primary" onclick="buyNow(this)"><span>Buy Now</span><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>' +
           (waNum ? '<a href="' + waUrl + '" target="_blank" rel="noopener" class="btn-whatsapp">Discuss on WhatsApp <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" width="14" height="14"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>' : '') +
           '<a href="/customize-artwork/" class="btn-customize">Customize This Artwork <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" width="14" height="14"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>' +
         '</div>' +
@@ -311,26 +311,28 @@ main{padding-top:72px;min-height:100vh}
     currentImg = i;
   };
 
-  // Add to bag — simple session store (integrates with any future cart)
-  window.addToBag = function() {
-  const cart = JSON.parse(localStorage.getItem('her_cart') || '[]');
-  const existing = cart.find(i => i.slug === product._slug);
-  if (existing) { existing.qty = (existing.qty||1) + 1; }
-  else { cart.push({ slug:product._slug, name:product.name, price:product.price, image:product.image, qty:1 }); }
-  localStorage.setItem('her_cart', JSON.stringify(cart));
-    // Visual feedback
-    const btn = document.querySelector('.btn-primary span');
+  // Add to bag — shared store (index.html reads this same key to render the cart)
+  window.addToBag = function(clickedBtn) {
+    const cart = JSON.parse(localStorage.getItem('her_cart') || '[]');
+    const existing = cart.find(i => i.slug === product._slug);
+    if (existing) { existing.qty = (existing.qty||1) + 1; }
+    else { cart.push({ slug:product._slug, name:product.name, price:product.price, image:product.image, qty:1 }); }
+    localStorage.setItem('her_cart', JSON.stringify(cart));
+    // Visual feedback — only on the button that was actually clicked
+    const btn = clickedBtn ? clickedBtn.querySelector('span') : document.querySelector('.btn-primary span');
     if (btn) {
       const orig = btn.textContent;
       btn.textContent = 'Added to Bag ✓';
       setTimeout(() => { btn.textContent = orig; }, 2000);
-  window.buyNow = function() {
-  addToBag();              // reuse the same "add to locker" logic
-  window.location.href = '/#'; // send them to the homepage
-  // once you build a real checkout page, change the line above to:
-  // window.location.href = '/checkout/';
-};
     }
+  };
+
+  // Buy Now — adds the item, then sends the customer to the homepage cart
+  window.buyNow = function(clickedBtn) {
+    addToBag(clickedBtn);
+    window.location.href = '/#';
+    // once you build a real checkout page, change the line above to:
+    // window.location.href = '/checkout/';
   };
 })();
 </script>
