@@ -1491,7 +1491,7 @@ footer {
   .hero {
     grid-template-columns: 1fr;
     grid-template-rows: auto 55vw;
-  }
+ }
   .hero-left {
     justify-content: flex-end;
     min-height: auto;
@@ -1563,6 +1563,9 @@ footer {
   .btn-primary, .btn-ghost { font-size: .6rem; }
 }
 
+@media (min-width: 1440px) {
+  html { font-size: 18px; }
+}
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: .01ms !important;
