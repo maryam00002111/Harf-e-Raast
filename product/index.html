@@ -121,6 +121,38 @@ main{padding-top:72px;min-height:100vh}
   .product-meta{grid-template-columns:1fr}
   .related-grid{grid-template-columns:1fr 1fr}
 }
+@media(min-width:1025px){
+  html{font-size:19px}
+}
+
+/* CART DRAWER */
+.cart-overlay{position:fixed;inset:0;background:rgba(17,17,15,.55);z-index:300;opacity:0;visibility:hidden;transition:opacity .35s var(--ease),visibility .35s;display:flex;justify-content:flex-end}
+.cart-overlay.open{opacity:1;visibility:visible}
+.cart-drawer{width:min(420px,100%);height:100%;background:var(--warm-ivory);display:flex;flex-direction:column;transform:translateX(100%);transition:transform .4s var(--ease)}
+.cart-overlay.open .cart-drawer{transform:translateX(0)}
+.cart-drawer-header{display:flex;justify-content:space-between;align-items:center;padding:24px 32px;border-bottom:1px solid var(--muted-sand)}
+.cart-drawer-title{font-family:var(--serif);font-size:1.2rem}
+.cart-close{font-family:var(--sans);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--warm-gray)}
+.cart-items{flex:1;padding:24px 32px;overflow-y:auto}
+.cart-empty{color:var(--warm-gray);font-size:1rem}
+.cart-item{display:flex;gap:16px;align-items:center;padding:16px 0;border-bottom:1px solid rgba(0,0,0,.08)}
+.cart-item img{width:64px;height:64px;object-fit:cover;border-radius:4px}
+.cart-item-info{flex:1}
+.cart-item-name{font-size:.85rem;margin-bottom:4px}
+.cart-item-price{font-size:.75rem;opacity:.7}
+.cart-item-remove{font-size:.65rem;text-transform:uppercase;letter-spacing:.05em;opacity:.6}
+.cart-item-remove:hover{opacity:1}
+.cart-item-qty{display:flex;align-items:center;gap:10px;margin-top:6px}
+.cart-item-qty button{width:22px;height:22px;border:1px solid rgba(0,0,0,.15);font-size:.8rem;line-height:1;display:flex;align-items:center;justify-content:center;background:transparent}
+.cart-item-qty button:hover{background:var(--champagne);border-color:var(--champagne)}
+.cart-item-qty span{font-size:.8rem;min-width:14px;text-align:center}
+.cart-footer{padding:24px 32px;border-top:1px solid var(--muted-sand)}
+.cart-total{display:flex;justify-content:space-between;margin-bottom:16px}
+.cart-total-label{font-size:.9rem;color:var(--warm-gray)}
+.cart-total-price{font-family:var(--serif);font-size:1.3rem}
+.cart-bubble{position:fixed;right:24px;bottom:24px;width:56px;height:56px;border-radius:50%;background:var(--obsidian);color:var(--warm-ivory);display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 8px 24px rgba(0,0,0,.28);z-index:200;transition:transform .3s var(--ease)}
+.cart-bubble:hover{transform:scale(1.08)}
+.cart-bubble-count{position:absolute;top:-4px;right:-4px;background:var(--champagne);color:var(--obsidian);font-size:.62rem;font-family:var(--sans);width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center}
 </style>
 </head>
 <body>
@@ -136,6 +168,38 @@ main{padding-top:72px;min-height:100vh}
 <main id="mainContent">
   <div class="loading-state"><div class="loading-arabic">ح</div></div>
 </main>
+
+<!-- Cart Drawer -->
+<div class="cart-overlay" id="cartOverlay" onclick="closeCart()">
+  <div class="cart-drawer" onclick="event.stopPropagation()">
+    <div class="cart-drawer-header">
+      <div class="cart-drawer-title">Your Bag</div>
+      <button class="cart-close" onclick="closeCart()">Close ×</button>
+    </div>
+    <div class="cart-items" id="cartItems">
+      <div class="cart-empty">Your bag is empty.</div>
+    </div>
+    <div class="cart-footer">
+      <div class="cart-total">
+        <div class="cart-total-label">Total</div>
+        <div class="cart-total-price" id="cartTotalPrice">PKR 0</div>
+      </div>
+      <a href="/checkout/" class="btn-primary" style="width:100%; justify-content:center;">
+        <span>Proceed to Checkout</span>
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- Floating Cart Bubble -->
+<div class="cart-bubble" id="cartBubble" onclick="openCart()" style="display:none;">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="22" height="22">
+    <path d="M6 8h12l-1.2 10.2a2 2 0 0 1-2 1.8H9.2a2 2 0 0 1-2-1.8L6 8Z"/>
+    <path d="M9 8V6a3 3 0 0 1 6 0v2"/>
+  </svg>
+  <span class="cart-bubble-count" id="cartBubbleCount">0</span>
+</div>
 
 <script>
 (async function() {
@@ -311,13 +375,14 @@ main{padding-top:72px;min-height:100vh}
     currentImg = i;
   };
 
-  // Add to bag — shared store (index.html reads this same key to render the cart)
+  // Add to bag — shared store (index.html and this page's own drawer both read this key)
   window.addToBag = function(clickedBtn) {
     const cart = JSON.parse(localStorage.getItem('her_cart') || '[]');
     const existing = cart.find(i => i.slug === product._slug);
     if (existing) { existing.qty = (existing.qty||1) + 1; }
     else { cart.push({ slug:product._slug, name:product.name, price:product.price, image:product.image, qty:1 }); }
     localStorage.setItem('her_cart', JSON.stringify(cart));
+    renderCart();
     // Visual feedback — only on the button that was actually clicked
     const btn = clickedBtn ? clickedBtn.querySelector('span') : document.querySelector('.btn-primary span');
     if (btn) {
@@ -327,13 +392,80 @@ main{padding-top:72px;min-height:100vh}
     }
   };
 
-  // Buy Now — adds the item, then sends the customer to the homepage cart
-  window.buyNow = function(clickedBtn) {
-    addToBag(clickedBtn);
-    window.location.href = '/#';
-    // once you build a real checkout page, change the line above to:
-    // window.location.href = '/checkout/';
+  // Buy Now — skips the bag entirely and sends just this one item straight to checkout
+  window.buyNow = function() {
+    const single = { slug:product._slug, name:product.name, price:product.price, image:product.image, qty:1 };
+    localStorage.setItem('her_buynow_item', JSON.stringify(single));
+    window.location.href = '/checkout/?mode=buynow';
   };
+
+  /* ── CART DRAWER (shared with index.html) ───────────────────── */
+  function getCart() {
+    return JSON.parse(localStorage.getItem('her_cart') || '[]');
+  }
+
+  function renderCart() {
+    const cart = getCart();
+    const countEl = document.getElementById('cartCount');
+    const itemsEl = document.getElementById('cartItems');
+    const totalEl = document.getElementById('cartTotalPrice');
+    const bubbleEl = document.getElementById('cartBubble');
+    const bubbleCountEl = document.getElementById('cartBubbleCount');
+    if (!itemsEl) return;
+
+    const totalQty = cart.reduce((sum, i) => sum + (i.qty || 1), 0);
+    if (countEl) countEl.textContent = totalQty;
+    if (bubbleCountEl) bubbleCountEl.textContent = totalQty;
+    if (bubbleEl) bubbleEl.style.display = totalQty > 0 ? 'flex' : 'none';
+
+    if (cart.length === 0) {
+      itemsEl.innerHTML = '<div class="cart-empty">Your bag is empty.</div>';
+      if (totalEl) totalEl.textContent = 'PKR 0';
+      return;
+    }
+
+    let total = 0;
+    itemsEl.innerHTML = cart.map((it, index) => {
+      const priceNum = parseFloat((it.price || '0').toString().replace(/[^0-9.]/g, '')) || 0;
+      total += priceNum * (it.qty || 1);
+      return '<div class="cart-item">' +
+               (it.image ? '<img src="' + it.image + '" alt="' + (it.name||'') + '">' : '') +
+               '<div class="cart-item-info">' +
+                 '<div class="cart-item-name">' + (it.name||'') + '</div>' +
+                 '<div class="cart-item-price">' + (it.price||'') + '</div>' +
+                 '<div class="cart-item-qty">' +
+                   '<button onclick="changeQty(' + index + ',-1)">−</button>' +
+                   '<span>' + (it.qty||1) + '</span>' +
+                   '<button onclick="changeQty(' + index + ',1)">+</button>' +
+                 '</div>' +
+               '</div>' +
+               '<button class="cart-item-remove" onclick="removeFromCart(' + index + ')">Remove</button>' +
+             '</div>';
+    }).join('');
+
+    if (totalEl) totalEl.textContent = 'PKR ' + total;
+  }
+
+  window.changeQty = function(index, delta) {
+    const cart = getCart();
+    if (!cart[index]) return;
+    cart[index].qty = (cart[index].qty || 1) + delta;
+    if (cart[index].qty < 1) { cart.splice(index, 1); }
+    localStorage.setItem('her_cart', JSON.stringify(cart));
+    renderCart();
+  };
+
+  window.removeFromCart = function(index) {
+    const cart = getCart();
+    cart.splice(index, 1);
+    localStorage.setItem('her_cart', JSON.stringify(cart));
+    renderCart();
+  };
+
+  window.openCart = function() { renderCart(); document.getElementById('cartOverlay').classList.add('open'); };
+  window.closeCart = function() { document.getElementById('cartOverlay').classList.remove('open'); };
+
+  renderCart();
 })();
 </script>
 </body>
