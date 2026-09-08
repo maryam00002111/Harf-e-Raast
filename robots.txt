@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://harf-e-raast.com/sitemap.xml
