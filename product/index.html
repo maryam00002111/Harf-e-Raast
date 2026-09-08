@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Artwork — Harf-e-Raast</title>
-<meta name="description" content="">
-<meta property="og:title" content="">
-<meta property="og:description" content="">
+<meta name="description" content="Original hand-painted Arabic calligraphy and Islamic wall art from Harf-e-Raast.">
+<meta property="og:title" content="Harf-e-Raast — Original Calligraphy Artwork">
+<meta property="og:description" content="Original hand-painted Arabic calligraphy and Islamic wall art from Harf-e-Raast.">
 <meta property="og:type" content="product">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,300;0,6..96,400;1,6..96,300;1,6..96,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=Noto+Naskh+Arabic:wght@400;500&display=swap" rel="stylesheet">
@@ -258,15 +258,39 @@ main{padding-top:72px;min-height:100vh}
   // SEO
   if (product.seo_title || product.name) document.title = (product.seo_title || product.name) + ' — Harf-e-Raast';
   const md = document.querySelector('meta[name="description"]');
-  if (md) md.content = product.seo_description || product.short_desc || '';
+  if (md) md.content = product.seo_description || product.short_desc || md.content;
   const ogT = document.querySelector('meta[property="og:title"]');
-  if (ogT) ogT.content = product.name || '';
+  if (ogT) ogT.content = product.name ? (product.name + ' — Harf-e-Raast') : ogT.content;
   const ogD = document.querySelector('meta[property="og:description"]');
-  if (ogD) ogD.content = product.short_desc || '';
+  if (ogD) ogD.content = product.short_desc || ogD.content;
   if (product.og_image || product.image) {
     let ogI = document.querySelector('meta[property="og:image"]');
     if (!ogI) { ogI = document.createElement('meta'); ogI.setAttribute('property','og:image'); document.head.appendChild(ogI); }
     ogI.content = product.og_image || product.image;
+  }
+
+  // Structured data — helps Google show price/image/availability in search results
+  if (product.name) {
+    const priceNum = parseFloat((product.price || '0').toString().replace(/[^0-9.]/g, '')) || 0;
+    const ld = document.createElement('script');
+    ld.type = 'application/ld+json';
+    ld.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Product",
+      "name": product.name,
+      "image": product.image ? [product.image] : undefined,
+      "description": product.short_desc || product.description || undefined,
+      "sku": product.sku || product._slug,
+      "brand": { "@type": "Brand", "name": "Harf-e-Raast" },
+      "offers": priceNum ? {
+        "@type": "Offer",
+        "url": window.location.href,
+        "priceCurrency": "PKR",
+        "price": priceNum,
+        "availability": "https://schema.org/InStock"
+      } : undefined
+    });
+    document.head.appendChild(ld);
   }
 
   // Collection label
