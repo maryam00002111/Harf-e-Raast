@@ -1445,6 +1445,13 @@ footer {
 .cart-item-price { font-size: .75rem; opacity: .7; }
 .cart-item-remove { font-size: .65rem; text-transform: uppercase; letter-spacing: .05em; opacity: .6; }
 .cart-item-remove:hover { opacity: 1; }
+.cart-item-qty { display: flex; align-items: center; gap: 10px; }
+.cart-item-qty button { width: 22px; height: 22px; border: 1px solid rgba(0,0,0,.15); font-size: .8rem; line-height: 1; display: flex; align-items: center; justify-content: center; background: transparent; }
+.cart-item-qty button:hover { background: var(--champagne); border-color: var(--champagne); }
+.cart-item-qty span { font-size: .8rem; min-width: 14px; text-align: center; }
+.cart-bubble { position: fixed; right: 24px; bottom: 24px; width: 56px; height: 56px; border-radius: 50%; background: var(--obsidian); color: var(--warm-ivory); display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 8px 24px rgba(0,0,0,.28); z-index: 200; transition: transform .3s var(--ease-out-expo); }
+.cart-bubble:hover { transform: scale(1.08); }
+.cart-bubble-count { position: absolute; top: -4px; right: -4px; background: var(--champagne); color: var(--obsidian); font-size: .62rem; font-family: var(--sans); width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
 .cart-empty {
   font-family: var(--serif);
   font-style: italic;
@@ -2371,7 +2378,7 @@ body,
         <div class="cart-total-label">Total</div>
         <div class="cart-total-price" id="cartTotalPrice">PKR 0</div>
       </div>
-      <a href="#" class="btn-primary" style="width:100%; justify-content:center;">
+      <a href="/checkout/" class="btn-primary" style="width:100%; justify-content:center;">
         <span>Proceed to Checkout</span>
         <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
           <path d="M3 8h10M9 4l4 4-4 4"/>
@@ -2379,6 +2386,15 @@ body,
       </a>
     </div>
   </div>
+</div>
+
+<!-- Floating Cart Bubble -->
+<div class="cart-bubble" id="cartBubble" onclick="openCart()" style="display:none;">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="22" height="22">
+    <path d="M6 8h12l-1.2 10.2a2 2 0 0 1-2 1.8H9.2a2 2 0 0 1-2-1.8L6 8Z"/>
+    <path d="M9 8V6a3 3 0 0 1 6 0v2"/>
+  </svg>
+  <span class="cart-bubble-count" id="cartBubbleCount">0</span>
 </div>
 
 <script>
@@ -2502,10 +2518,14 @@ function renderCart() {
   const countEl = document.getElementById('cartCount');
   const itemsEl = document.getElementById('cartItems');
   const totalEl = document.getElementById('cartTotalPrice');
+  const bubbleEl = document.getElementById('cartBubble');
+  const bubbleCountEl = document.getElementById('cartBubbleCount');
   if (!itemsEl) return;
 
   const totalQty = cart.reduce((sum, item) => sum + (item.qty || 1), 0);
   if (countEl) countEl.textContent = totalQty;
+  if (bubbleCountEl) bubbleCountEl.textContent = totalQty;
+  if (bubbleEl) bubbleEl.style.display = totalQty > 0 ? 'flex' : 'none';
 
   if (cart.length === 0) {
     itemsEl.innerHTML = '<div class="cart-empty">Your bag is empty.</div>';
@@ -2521,13 +2541,27 @@ function renderCart() {
              (item.image ? '<img src="' + item.image + '" alt="' + (item.name||'') + '">' : '') +
              '<div class="cart-item-info">' +
                '<div class="cart-item-name">' + (item.name||'') + '</div>' +
-               '<div class="cart-item-price">' + (item.price||'') + ' × ' + (item.qty||1) + '</div>' +
+               '<div class="cart-item-price">' + (item.price||'') + '</div>' +
+               '<div class="cart-item-qty">' +
+                 '<button onclick="changeQty(' + index + ',-1)">−</button>' +
+                 '<span>' + (item.qty||1) + '</span>' +
+                 '<button onclick="changeQty(' + index + ',1)">+</button>' +
+               '</div>' +
              '</div>' +
              '<button class="cart-item-remove" onclick="removeFromCart(' + index + ')">Remove</button>' +
            '</div>';
   }).join('');
 
   if (totalEl) totalEl.textContent = 'PKR ' + total;
+}
+
+function changeQty(index, delta) {
+  const cart = getCart();
+  if (!cart[index]) return;
+  cart[index].qty = (cart[index].qty || 1) + delta;
+  if (cart[index].qty < 1) { cart.splice(index, 1); }
+  localStorage.setItem('her_cart', JSON.stringify(cart));
+  renderCart();
 }
 
 function removeFromCart(index) {
