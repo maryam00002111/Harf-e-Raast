@@ -247,9 +247,9 @@
     }
 
     const focalInner = heroSection.querySelector('.hero-calligraphy-inner');
-    if (focalInner && hero.focal_arabic) focalInner.textContent = hero.focal_arabic;
+    if (focalInner) focalInner.textContent = hero.focal_arabic || '';
     const focalLabel = heroSection.querySelector('.hero-calligraphy-label');
-    if (focalLabel && hero.focal_label) focalLabel.textContent = hero.focal_label;
+    if (focalLabel) focalLabel.textContent = hero.focal_label || '';
     const edTag = heroSection.querySelector('.hero-edition');
     if (edTag) setText(edTag, hero.edition_tag);
 
